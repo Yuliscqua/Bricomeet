@@ -1,0 +1,23 @@
+body{
+    text-align: center;
+}
+
+h1{
+    color :pink;
+}
+
+table{
+    margin: auto;
+    border: solid;
+    border-radius: 5px ;
+    border-color: purple;
+}
+
+a:link{
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
