@@ -28,11 +28,60 @@ ul {
 }
 
 .nav {
+  height: 56px;
   padding: 0.8rem 1.5rem;
+  background: #171717;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  position: relative;
 }
+
+.nav::after{
+  position: absolute;
+  content: "";
+  top: 15px;
+  left: -3%;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 105%;
+  transform: scale(0.9) translateZ(0);
+  filter: blur(15px);
+  background: linear-gradient(
+    to left,
+    #57d8ff,
+    #4283e4,
+    #2d50c4,
+    #3616c3,
+    #6501de,
+    #3616c3,
+    #2d50c4,
+    #4283e4,
+    #57d8ff
+  );
+  background-size: 200% 200%;
+  -webkit-animation: animateGlow 1.25s linear infinite;
+  animation: animateGlow 1.25s linear infinite;
+}
+
+@-webkit-keyframes animateGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes animateGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
 .nav-left,
 .nav-right {
   display: flex;
@@ -77,20 +126,6 @@ ul {
   background-color: #212121;
 }
 
-.btn-primary {
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 0.625rem 1rem;
-  gap: 8px;
-  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
-}
-.btn-primary > svg,
-.btn-icon > svg {
-  width: 20px;
-  height: 20px;
-  margin-left: 0;
-}
-
 .btn-profile {
   font-size: 16px;
   padding: 0.5rem 0.80rem 0.5rem 0.5rem;
@@ -99,17 +134,6 @@ ul {
   width: 24px;
   height: 24px;
   margin-left: 0;
-}
-.profile-pic {
-  width: 2.25rem;
-  margin-left: 1rem;
-  aspect-ratio: 1;
-}
-.profile-pic > img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  border-radius: 0.375rem;
 }
 
 /* DROPDOWN MENU */
@@ -191,30 +215,6 @@ ul {
   background-color: #4150f1;
 }
 
-/* Menu Icon */
-.menu-icon {
-  display: none;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 6px;
-}
-.menu-icon:hover {
-  background-color: #212121;
-}
-
-@media (width <= 900px) {
-  .nav-left > .nav-menu {
-    display: none;
-  }
-  .nav-right > * {
-    display: none;
-  }
-
-  .menu-icon {
-    display: block;
-  }
-}
-
 .wrapper {
   display: flex;
   width: 100%;
@@ -223,6 +223,7 @@ ul {
 }
 
 .card {
+  margin-top: 1%;
   width: 350px;
   height: 700px;
   border: solid 3px #272727;
