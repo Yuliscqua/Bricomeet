@@ -53,15 +53,15 @@ ul {
     #4283e4,
     #2d50c4,
     #3616c3,
-    #6501de,
+    #3b0083,
     #3616c3,
     #2d50c4,
     #4283e4,
     #57d8ff
   );
   background-size: 200% 200%;
-  -webkit-animation: animateGlow 1.25s linear infinite;
-  animation: animateGlow 1.25s linear infinite;
+  -webkit-animation: animateGlow 4s linear infinite;
+  animation: animateGlow 4s linear infinite;
 }
 
 @-webkit-keyframes animateGlow {
@@ -94,11 +94,17 @@ ul {
   justify-content: center;
   align-items: center;
   margin-right: 0.5rem;
-  translate: 0 0.25rem;
+  translate: 0 -0.08rem;
+  transition: opacity 0.3s ease-in-out;
 }
 .nav-brand > img {
-  width : 160px;
+  width : 170px;
   height : 46px;
+}
+
+.nav-brand:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 .nav-menu {
@@ -107,7 +113,7 @@ ul {
 }
 
 .nav-link {
-  font-size: 0.875rem;
+  font-size: 16px;
   font-weight: 600;
   padding: 0.6rem 0.625rem;
   border-radius: 0.5rem;
@@ -120,7 +126,7 @@ ul {
   font-weight: 600;
   width: 14px;
   height: 14px;
-  margin-left: 4px;
+  margin-left: 10px;
 }
 .nav-link:hover {
   background-color: #212121;
@@ -128,12 +134,12 @@ ul {
 
 .btn-profile {
   font-size: 16px;
-  padding: 0.5rem 0.80rem 0.5rem 0.5rem;
+  padding: 0.5rem 5.2rem 0.5rem 0.4rem;
 }
 .btn-profile > svg {
   width: 24px;
   height: 24px;
-  margin-left: 0;
+  margin-right: 10px;
 }
 
 /* DROPDOWN MENU */
@@ -168,7 +174,6 @@ ul {
   font-weight: 600;
   padding: 1rem;
   background-color: #292929;
-  padding: 1rem;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
@@ -213,6 +218,12 @@ ul {
 }
 .profile-dropdown > a:nth-child(3):hover {
   background-color: #4150f1;
+}
+
+.titre{
+  padding: 30px;
+  padding-bottom: 5px;
+  text-align: center;
 }
 
 .wrapper {
@@ -305,3 +316,80 @@ font-weight: bold;
 cursor: pointer;
 transition: 0.4s ease;
 }
+
+.titre {
+  padding-top: 55px;
+  padding-bottom: 40px;
+}
+
+.presentation {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 0.7;
+  border-radius: 8px;
+  position: relative;
+}
+.presentation .image-box {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+.presentation .image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 90%;
+  border-radius: inherit;
+  transition: 0.5s ease-in-out;
+}
+
+.presentation::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: 0.4s ease-in-out;
+}
+
+.presentation:hover img {
+  filter: grayscale(1) brightness(0.4);
+}
+.presentation:hover::after {
+  opacity: 1;
+  inset: 20px;
+}
+
+.contenu {
+  width: 80%;
+  position: absolute;
+  top: 17%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.contenu h1,
+.contenu p {
+  opacity: 0;
+  transition: 0.4s 0.2s ease;
+}
+.contenu h1 {
+  margin-bottom: 12px;
+  scale: 0.7;
+}
+.contenu p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #d1d1d1;
+  transform: translateY(50%);
+}
+.presentation:hover .contenu h1 {
+  scale: 1;
+  opacity: 1;
+}
+.presentation:hover .contenu P {
+  opacity: 1;
+  transform: translateY(0);
+}
+
