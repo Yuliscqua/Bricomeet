@@ -2,10 +2,10 @@
 session_start();
 
 function ajouterUtilisateur($donnees_utilisateur, $chemin_fichier) {
-    $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES);
+    $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($utilisateurs as $utilisateur) {
         $donnees = explode(',', $utilisateur);
-        if ($donnees[0] === $donnees_utilisateur["pseudo"]) {
+        if ($donnees[0] === $donnees_utilisateur['pseudo']) {
             return false;
         }
     }
@@ -42,15 +42,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $photo_destination = __DIR__ . '/photos_profil/' . $photo_name; 
 
         if (move_uploaded_file($photo_tmp_name, $photo_destination)) {
+            $donnees_utilisateur['photo'] = $photo_name;
             $message = "Photo de profil enregistrée avec succès.";
         } else {
             $message = "Une erreur s'est produite lors de l'enregistrement de la photo de profil.";
         }
-        } elseif ($_FILES['photo']['error'] === UPLOAD_ERR_NO_FILE) {
-            $message = "Aucune photo de profil téléchargée.";
-        } else {
-            $message = "Une erreur s'est produite lors du téléchargement de la photo de profil.";
-        }
+    } elseif ($_FILES['photo']['error'] === UPLOAD_ERR_NO_FILE) {
+        $message = "Aucune photo de profil téléchargée.";
+    } else {
+        $message = "Une erreur s'est produite lors du téléchargement de la photo de profil.";
+    }
 
     $chemin_fichier = __DIR__ . '/bdd_users.txt';
 
@@ -63,8 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -73,9 +74,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <title>Bienvenue sur BricoMeet !</title>
     </head>
     <body>
-        <a href="#" class="nav-brand">
+        <a href="Accueil.html" class="nav-brand">
             <img src="./assets/logo-1.png">
-          </a>  
+        </a>  
         <div class="content">
         <form enctype="multipart/form-data" method="post" action="">
                 <h1><b>Rejoins la team BricoMeet et inscris toi !</b></h1>

@@ -1,0 +1,5 @@
+Marie-Madeleine,Femme,123,1954-05-04,Menuisier,France,Indre-et-Loire,Tours,Célibataire,0,152,52,bio,Fourcade,Marie-Madeleine,7 avenue du Paradis,2024-05-24,user
+Roberto Carlos da Silva Rocha,Homme,1234,2002-05-04,Bétonneur,France,Val d'Oise,Argenteuil,Célibataire,3,144,70,bio,Carlos da Silva Rocha,Roberto,24 rue de la Paix,2024-05-24,user
+x_RousseDu69_x,Femme,12345,1980-05-04,Travail à Leroy Merlin,France,Rhône,Lyon,Célibataire,0,163,55,bio,Watson,Emma,40 rue des Robinets,2024-05-24,user
+Manu Macron,Homme,123456,2006-05-04,Président des Bricoleurs,France,Paris,Paris,Marié(e),0,180,61,bio,Macron,Emmanuel,1 avenue de l'Elysee,2024-05-24,user
+Shakira,Femme,1234567,1925-05-04,Plombière,France,Bouches-du-Rhône,Marseille,Marié(e),2,169,58,bio,Isabel Mebarak Ripoll,Shakira,34 rue de l'arc-en-ciel,2024-05-24,user

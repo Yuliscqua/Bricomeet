@@ -1,0 +1,101 @@
+body{
+    font-family: "Tw Cen MT", sans-serif;
+    color : #242a30;
+    min-height: 100vh;
+    display : flex;
+    align-items : center;
+    justify-content: center;
+    background-color: #353535;
+}
+.content{
+    position : relative;
+    max-width: 900px;
+    width: 100%;
+    border-radius : 6px;
+    padding : 30px;
+    margin: 0 15px;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+#submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    max-width: 200px;
+    width: 100%;
+    border : none;
+    outline: none;
+    color : #fff;
+    border-radius: 5px;
+    margin: 25px 0;
+    background-color: #353535;
+    transition: all 0,3s linear;
+    cursor: pointer;
+    font-size: large;
+}
+
+
+
+.nav-brand > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+
+.fields {
+    display: flex;
+    align-items: calc(100);
+    justify-content: space-between;
+}
+
+.input_fields3 {
+    display: flex;
+    width : calc(100% / 3 - 15px);
+    flex-direction: column;
+}
+
+.input_fields2 {
+    display: flex;
+    width : calc(100% / 2 - 15px);
+    flex-direction: column;
+}
+
+.input_fields3 label, .input_fields2 label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1f1f1f;
+}
+
+.input_fields3 input, .input_fields2 input {
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding: 0 15px;
+    height: 42px;
+    margin: 8px 0;
+}
+
+.input_fields2 input[type="radio"] {
+    margin: 5px 5px 5px 0;
+    vertical-align: middle;
+}
+
+.input_fields2 input[type="radio"] + label {
+    margin-right: 15px;
+    cursor: pointer;
+    font-size: 18px; /* Ajoutez la taille de police pour les labels des boutons radio */
+    font-weight: 500; /* Ajoutez le poids de police pour les labels des boutons radio */
+    color: #1f1f1f;
+}
+
+
+#bio {
+    height: 150px;
+}
+

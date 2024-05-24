@@ -7,55 +7,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pseudo = $_SESSION['pseudo'];
 
         $chemin_fichier = __DIR__ . '/bdd_users.txt';
-        $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES);
+        $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         $nouveaux_utilisateurs = [];
 
         foreach ($utilisateurs as $utilisateur) {
             $donnees = explode(',', $utilisateur);
             if ($donnees[0] === $pseudo) {
-                $donnees[count($donnees) - 1] = $abonnement;
+                $donnees[count($donnees) - 1] = $abonnement; // Remplacer l'avant-dernière valeur par l'abonnement
             }
             $nouveaux_utilisateurs[] = implode(',', $donnees);
         }
 
         file_put_contents($chemin_fichier, implode(PHP_EOL, $nouveaux_utilisateurs) . PHP_EOL);
 
-        header("Location: Accueil.html");
+        header("Location: Accueil_Abonne.php");
         exit;
     } else {
-        echo "Méthode de requête non autorisée.";
+        echo "Aucun abonnement fourni.";
         exit;
     }
 }
 ?>
 
+
 <!DOCTYPE html>
-<html lang="fr">
+<html>
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choix de l'abonnement - BricoMeet</title>
     <style type="text/css">
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+    @import "https://unpkg.com/open-props" layer(design.system);
     * {
         margin:0px;
         padding:0px;
         box-sizing:border-box;
     }
     body {
-        font-family:"Tw Cen MT",sans-serif;
+      background-color: #353535;
+      font-family: "Montserrat", sans-serif;
     }
     .abonnements {
         transform: scale(1.5); 
         transform-origin: top;
-        background-color: #eee; 
+        background-color: #353535; 
         height: 100%;
     }
     .abonnements .formules {
         width: 90%;
         max-width: 500px;
         text-align: center;
-        margin:0 auto;
-        padding:40px 20px
+        margin:10px auto;
+        padding:20px 20px;
+        color: #fff;
+        background-color: #171717;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
     }
 
     .abonnements .formules h2{
@@ -132,17 +140,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .quit {
+        color: #fff;
         position: fixed;
         bottom: -60px; 
         left: 50%;
         transform: translateX(-50%);
-        background-color: #ffffff;
+        background-color: #171717;
         padding: 10px 20px;
-        border: 1px solid #cccccc; 
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
         z-index: 9999; 
         font-size: 14px; 
+    }
+
+    .quit1:visited {
+        color: #fff;
     }
 
   </style>
@@ -206,7 +218,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
       </div>
       <div class=quit>
-      <a href="Accueil.html">Je ne suis pas intéréssé pour l'instant</a>
+      <a class=quit1 href="Accueil_Utilisateur.php">Je ne suis pas intéréssé pour l'instant</a>
       </div>
     </div>  
   </body>
