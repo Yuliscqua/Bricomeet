@@ -15,7 +15,19 @@ $is_editable = false;
 if ($pseudo_connecte === $pseudo) {
   $is_editable = true;
 }
-// Lire le fichier texte
+
+$chemin_fichier = __DIR__ . '/bdd_users.txt';
+$utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$estAbonne = true;
+foreach ($utilisateurs as $utilisateur) {
+  $donnees = explode(',', $utilisateur);
+  if ($donnees[0] === $pseudo && $donnees[count($donnees) - 2] == "user" ) {
+      $estAbonne = true;
+      break;
+  }
+}
+
+
 $filename = 'bdd_users.txt';
 $file = fopen($filename, "r");
 $profile = null;
@@ -30,9 +42,8 @@ if ($file) {
         if ($data[0] === $pseudo) {
             $photo_path = __DIR__ . '/photos_profil/pdp_' . $data[0] . '.jpg';
             $photo_url = 'photos_profil/pdp_' . $data[0] . '.jpg';
-            // Vérifiez si la photo de profil existe
             if (!file_exists($photo_path)) {
-                $photo_url = 'photos_profil/default.jpg'; // Image par défaut
+                $photo_url = 'photos_profil/default.jpg';
             }
             $profile = [
                 'Pseudo' => $data[0],
@@ -53,7 +64,7 @@ if ($file) {
                 'Adresse' => $data[15],
                 'Date d\'inscription' => $data[16],
                 'Rôle' => $data[17],
-                'Photo' => $photo_url // Chemin de la photo de profil ou image par défaut
+                'Photo' => $photo_url
             ];
         }
         if ($data[0] === $pseudo_connecte && $data[17] === 'admin') {
@@ -472,15 +483,27 @@ h1 {
 <body>
 <nav class="nav">
       <div class="nav-left">
-        <a href="Accueil_Utilisateur.php" class="nav-brand">
-          <img src="./assets/logo-1.png">
-        </a>
+      <?php
+        if ($estAbonne) {
+            echo '<a href="Accueil_Abonne.php" class="nav-brand">
+                    <img src="./assets/logo-1.png">
+                  </a>';
+        } else {
+            echo '<a href="Accueil_Utilisateur.php" class="nav-brand">
+                    <img src="./assets/logo-1.png">
+                  </a>';
+        }
+      ?>
 
         <ul class="nav-menu">
           <li>
-              <a href="Accueil_Utilisateur.php" class="nav-link">
-                Accueil
-              </a>              
+            <?php
+              if ($estAbonne) {
+                  echo '<a href="Accueil_Abonne.php" class="nav-link">Accueil</a>';
+              } else {
+                  echo '<a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>';
+              }
+            ?>             
           </li>
         </ul>
         <ul>
