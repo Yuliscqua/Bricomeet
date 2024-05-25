@@ -1,11 +1,6 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['pseudo'])) {
-    echo "Vous devez être connecté pour voir cette page.";
-    exit;
-}
-
 $pseudo_connecte = $_SESSION['pseudo'];
 
 // Lire le fichier texte
@@ -205,6 +200,19 @@ ul {
   margin-right: 10px;
 }
 
+.profile-pic {
+  width: 2.25rem;
+  margin-left: 1rem;
+  aspect-ratio: 1;
+}
+.profile-pic > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 0.375rem;
+  object-fit: cover;
+}
+
 /* DROPDOWN MENU */
 .dropdown-container {
   position: relative;
@@ -293,6 +301,27 @@ ul {
 h1 {
   text-align: center;
 }
+
+.profile-photo {
+  margin-bottom: 55px;
+  width: 200px;
+  height: 200px;
+  border: solid 3px #272727;
+  border-radius: 19px;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.profile-photo > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 19px;
+}
+
 .profile-info {
   display: flex;
   flex-wrap: wrap;
@@ -449,7 +478,10 @@ h1 {
               <path fill="none" d="M0 0h24v24H0z"></path>
               <path fill="#F2F2F2" d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
             </svg>
-            <span href="Inscription.php">Compte</span>
+            <span href="Inscription.php"><?php echo htmlspecialchars($_SESSION['pseudo']); ?></span>
+            <div class="profile-pic">
+              <img src="<?php echo htmlspecialchars($profile['Photo']); ?>" alt="Profile Pic">
+            </div>
           </a>
 
           <div class="dropdown-menu profile-dropdown">

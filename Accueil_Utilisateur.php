@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -27,7 +31,7 @@
         </ul>
         <ul>
           <li>
-            <a href="#" class="nav-link">Rechercher</a>
+            <a href="Recherche.php" class="nav-link">Rechercher</a>
           </li>
         </ul>
       </div>
@@ -38,7 +42,10 @@
               <path fill="none" d="M0 0h24v24H0z"></path>
               <path fill="#F2F2F2" d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
             </svg>
-            <span>Compte</span>
+            <span><?php echo htmlspecialchars($_SESSION['pseudo']); ?></span>
+            <div class="profile-pic">
+              <img src="<?php echo 'photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg'; ?>" alt="Profile Pic">
+            </div>
           </a>
 
           <div class="dropdown-menu profile-dropdown">
@@ -81,7 +88,7 @@
       <div class="card">
           <img src="./assets/stock-photo-bearded-builder-isolated-on-white-background-professional-builder-with-tools-1488541394.jpg"/>
           <div class="info">
-              <h1>Roberto Carlos da Silva Rocha</h1>
+              <h1>Roberto Carlos</h1>
               <p>- Âge: 22 ans</br>- De: Argenteuil</p>
           </div>
       </div>

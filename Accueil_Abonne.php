@@ -27,7 +27,7 @@
         </ul>
         <ul>
           <li>
-            <a href="#" class="nav-link">Rechercher</a>
+            <a href="Recherche.php" class="nav-link">Rechercher</a>
           </li>
         </ul>
       </div>
@@ -81,7 +81,7 @@
       <div class="card">
           <img src="./assets/stock-photo-bearded-builder-isolated-on-white-background-professional-builder-with-tools-1488541394.jpg"/>
           <div class="info">
-              <h1>Roberto Carlos da Silva Rocha</h1>
+              <h1>Roberto Carlos</h1>
               <p>- Âge: 22 ans</br>- De: Argenteuil</p>
           </div>
       </div>
