@@ -2,6 +2,9 @@
 session_start();
 
 function age_from_date_of_birth($dob) {
+    if (empty($dob) || $dob === "?") {
+      return 0;
+    }
     $birthDate = new DateTime($dob);
     $today = new DateTime('today');
     $age = $birthDate->diff($today)->y;
@@ -512,12 +515,13 @@ margin-top: 8px;
                 <p>Aucun profil ne correspond à vos critères de recherche.</p>
             <?php else: ?>
                 <?php foreach ($resultats as $profile): ?>
+                  <a href="Profil.php?pseudo=<?php echo urlencode($profile['Pseudo']); ?>">
                     <div class="profile">
                         <img src="<?php echo htmlspecialchars($profile['Photo']); ?>" alt="Photo de profil">
                         <div class="info">
                             <h1><?php echo htmlspecialchars($profile['Pseudo']); ?></h2>
                             <p><strong>- Sexe :</strong> <?php echo htmlspecialchars($profile['Sexe']); ?></p>
-                            <p><strong>- Âge :</strong> <?php echo htmlspecialchars(age_from_date_of_birth($profile['Date de naissance'])); ?> ans</p>
+                            <p><strong>- Âge :</strong> <?php echo ($profile['Date de naissance'] === "?" ? "Âge non défini" : htmlspecialchars(age_from_date_of_birth($profile['Date de naissance']))); ?></p>
                             <p><strong>- Profession :</strong> <?php echo htmlspecialchars($profile['Profession']); ?></p>
                             <p><strong>- Pays :</strong> <?php echo htmlspecialchars($profile['Pays']); ?></p>
                             <p><strong>- Ville :</strong> <?php echo htmlspecialchars($profile['Ville']); ?></p>
@@ -525,6 +529,7 @@ margin-top: 8px;
                             <p><strong>- Description :</strong> <?php echo htmlspecialchars($profile['Description']); ?></p>
                         </div>
                     </div>
+                    </a>
                     <hr>
                 <?php endforeach; ?>
             <?php endif; ?>

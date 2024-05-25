@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach ($utilisateurs as $utilisateur) {
             $donnees = explode(',', $utilisateur);
             if ($donnees[0] === $pseudo) {
-                $donnees[count($donnees) - 1] = $abonnement; // Remplacer l'avant-dernière valeur par l'abonnement
+                $donnees[count($donnees) - 2] = $abonnement; 
             }
             $nouveaux_utilisateurs[] = implode(',', $donnees);
         }
