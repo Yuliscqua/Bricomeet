@@ -210,7 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div>Abonnement annuel déstinés aux dieux du bricolage</div>
           </div>
           <div class="button">
-            <form method="post" action=".">
+            <form method="post" action="">
               <input type="hidden" name="abonnement" value="subscriber_god">
               <button type="submit">Je souhaite devenir un dieu du bricolage</button>
             </form>
