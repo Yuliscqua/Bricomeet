@@ -1,26 +1,51 @@
 <?php
 session_start();
 
+$chemin_fichier = __DIR__ . '/bdd_users.txt';
+$utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$pseudo = $_SESSION['pseudo'];
+$deja_abonne = false;
+
+foreach ($utilisateurs as $utilisateur) {
+    $donnees = explode(',', $utilisateur);
+    if ($donnees[0] === $pseudo && ($donnees[count($donnees) - 2] == "subscriber_free" || $donnees[count($donnees) - 2] == "subscriber_classic" || $donnees[count($donnees) - 2] == "subscriber_god")) {
+        $deja_abonne = true;
+        break;
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['abonnement'])) {
         $abonnement = $_POST['abonnement'];
-        $pseudo = $_SESSION['pseudo'];
 
-        $chemin_fichier = __DIR__ . '/bdd_users.txt';
-        $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         $nouveaux_utilisateurs = [];
 
         foreach ($utilisateurs as $utilisateur) {
             $donnees = explode(',', $utilisateur);
             if ($donnees[0] === $pseudo) {
-                $donnees[count($donnees) - 2] = $abonnement; 
+                $donnees[count($donnees) - 2] = $abonnement;
             }
             $nouveaux_utilisateurs[] = implode(',', $donnees);
         }
 
         file_put_contents($chemin_fichier, implode(PHP_EOL, $nouveaux_utilisateurs) . PHP_EOL);
 
-        header("Location: Accueil_Abonne.php");
+        header("Location: Accueil_Utilisateur.php");
+        exit;
+    } elseif (isset($_POST['annuler_abonnement'])) {
+        $nouveaux_utilisateurs = [];
+
+        foreach ($utilisateurs as $utilisateur) {
+            $donnees = explode(',', $utilisateur);
+            if ($donnees[0] === $pseudo) {
+                $donnees[count($donnees) - 2] = 'user';
+            }
+            $nouveaux_utilisateurs[] = implode(',', $donnees);
+        }
+
+        file_put_contents($chemin_fichier, implode(PHP_EOL, $nouveaux_utilisateurs) . PHP_EOL);
+
+        header("Location: Accueil_Utilisateur.php");
         exit;
     } else {
         echo "Aucun abonnement fourni.";
@@ -157,9 +182,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         color: #fff;
     }
 
+    .deja-abo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #353535;
+        text-align: center;
+    }
+
+    .deja-abo h1 {
+        color: #fff;
+        font-size: 50px;
+        text-align: center;
+    }
+
+    .annuler-abonnement-form {
+            margin-top: 20px;
+        }
+    .annuler-abonnement-form button {
+            padding: 20px 40px;
+            background: linear-gradient(to bottom, #3a7bd5, #3a6073);
+            color: #fff;
+            border-radius: 10px;
+            outline: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 20px;
+    }
+    </style>
   </style>
   </head>
   <body>
+    <?php if ($deja_abonne): ?>
+      <a href="Accueil_Abonne.php" class="nav-brand">
+      <img src="./assets/logo-1.png">
+      </a>  
+            <div class="deja-abo">
+                <h1>Tu as déjà un abonnement !</h1><br>
+                <form method="post" action="" class="annuler-abonnement-form">
+                  <input type="hidden" name="annuler_abonnement" value="user"><br>
+                  <button type="submit">Souhaites-tu annuler ton abonnement ? Clique ici !</button>
+                </form>
+            </div>
+    <?php else: ?>
+      <a href="Accueil_Utilisateur.php" class="nav-brand">
+      <img src="./assets/logo-1.png">
+    </a>  
     <div class="abonnements">
       <div class="formules">
         <h2>Les formules proposées</h2>
@@ -221,5 +292,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <a class=quit1 href="Accueil_Utilisateur.php">Je ne suis pas intéréssé pour l'instant</a>
       </div>
     </div>  
+    <?php endif; ?>
+
   </body>
 </html>
