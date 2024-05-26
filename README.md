@@ -34,7 +34,7 @@ Limitation
 
 Les fonctionnalités suivantes n'ont pas été implantés :
 
-- Voir qui visite son profil lorsqu'on est abonné
+- Voir qui a visité son profil lorsqu'on est abonné
 - Avoir accès à tous les messages lorsqu'on est un administrateur
 
 Réalisé par Maxence Rannou, Vivien Lambert et Clément De Lacoste De Laval

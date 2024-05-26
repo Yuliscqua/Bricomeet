@@ -499,7 +499,7 @@ h1 {
     background-position-x: 1000px;
   }
   100% {
-    background-position-x: 0px;
+    background-positon-x: 0px;
   }
 }
 
@@ -508,7 +508,7 @@ h1 {
     background-position-x: -1000px;
   }
   100% {
-    background-position-x: 0px;
+    background-positon-x: 0px;
   }
 }
   </style>
@@ -524,17 +524,6 @@ h1 {
           <li>
             <a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>                        
           </li>
-        </ul>
-        <ul>
-          <?php if ($_SESSION['role'] == 'user'): ?>
-            <li>
-            <a href="Choix_abo.php" class="nav-link">Abonnements</a>
-            </li>
-          <?php else: ?>
-            <li>
-              <a href="Choice.php" class="nav-link">Messages</a>
-            </li>
-          <?php endif; ?>
         </ul>
         <ul>
           <li>
@@ -598,18 +587,7 @@ h1 {
           </form>
       </div>
       <?php
-      if (!$is_editable && !$estBloque) {
-          echo '<form method="POST" action="bloquer_utilisateur.php">
-                  <input type="hidden" name="pseudo" value="' . htmlspecialchars($profile['Pseudo']) . '">
-                  <button type="submit" name="bloquer">Bloquer cet utilisateur</button>
-                </form>';
-      }
-      if ($estBloque) {
-          echo '<form method="POST" action="debloquer_utilisateur.php">
-                  <input type="hidden" name="pseudo" value="' . htmlspecialchars($profile['Pseudo']) . '">
-                  <button type="submit" name="debloquer">Débloquer cet utilisateur</button>
-                </form>';
-      }
+
       ?>
       <div class="profile-info">
           <div><strong>Sexe :</strong>
@@ -757,7 +735,7 @@ h1 {
               <?php if ($is_admin || $is_editable) : ?>
                   <form method="POST" action="modifier_profil.php">
                       <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
-                      <input type="hidden" name="field" value="Prenom">
+                      <input type="hidden" name="field" value="Prénom">
                       <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Prénom']); ?>">
                       <button type="submit">Modifier</button>
                   </form>
