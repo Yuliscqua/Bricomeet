@@ -651,9 +651,12 @@ margin-top: 8px;
             </svg>
             <span href="Inscription.php"><?php echo htmlspecialchars($_SESSION['pseudo']); ?></span>
             <div class="profile-pic">
-              <?php if(file_exists('photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg')){ ?>
-                <img src="<?php echo 'photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg'; ?>" alt="Profile Pic">
-              <?php } ?>
+              <?php $photo='photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg';
+              if (!file_exists($photo)) {
+                $photo = 'photos_profil/default.jpg';
+              }
+              ?>
+              <img src="<?php echo htmlspecialchars($photo); ?>" alt="Profile Pic">
             </div>
           </a>
 

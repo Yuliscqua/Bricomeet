@@ -74,19 +74,22 @@ $last_five_users = array_slice($lines, -5);
             </svg>
             <span><?php echo htmlspecialchars($_SESSION['pseudo']); ?></span>
             <div class="profile-pic">
-              <?php if(file_exists('photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg')){ ?>
-                <img src="<?php echo 'photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg'; ?>" alt="Profile Pic">
-              <?php } ?>
+              <?php $photo='photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg';
+              if (!file_exists($photo)) {
+                $photo = 'photos_profil/default.jpg';
+              }
+              ?>
+              <img src="<?php echo htmlspecialchars($photo); ?>" alt="Profile Pic">
             </div>
           </a>
 
           <div class="dropdown-menu profile-dropdown">
-            <a href="#">
+            <a href="Choice.php">
               <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                 <path fill="none" d="M0 0h24v24H0z"></path>
                 <path fill="#D1D5DB" d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z"></path>
               </svg>
-              <span>Envoyer un commentaire</span>
+              <span>Messages</span>
             </a>
             <a href="Profil.php">
               <svg id="Layer_1" version="1.1" viewBox="0 0 150 150" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"width="20" height="20">

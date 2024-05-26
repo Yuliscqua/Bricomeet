@@ -11,7 +11,6 @@ $pp_pseudo_connecte = 'photos_profil/pdp_' . $pseudo_connecte . '.jpg';
 $filename = 'bdd_users.txt';
 
 $is_admin = false;
-$estAbonne = true;
 $profile = null;
 
 $utilisateurs = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -20,7 +19,6 @@ foreach ($utilisateurs as $utilisateur) {
     $data = explode(",", trim($utilisateur));
     if ($data[0] === $pseudo_connecte) {
         $is_admin = ($data[17] === 'admin');
-        $estAbonne = ($data[17] !== 'user');
         $profile = [
             'Pseudo' => $data[0],
             'Nom' => $data[13],
@@ -60,6 +58,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>Messagerie de <?php echo htmlspecialchars($profile['Prénom'] . ' ' . $profile['Nom']); ?></title>
   <link rel="stylesheet" type="text/css" href="Accueil.css">
   <style>
+        body, html {
+          height: 100%;
+          margin: 0;
+        }
+        
+        .content {
+          position: fixed;
+          bottom: 50%;
+          width: 70%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .input_fields4 {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 50px 100px 50px 100px;
+        }
+
+        .search {
+          display: flex;
+          width: 350%;
+          max-width: 500px;
+          height: 45px;
+          padding: 12px;
+          border-radius: 12px;
+          border: 1.5px solid lightgrey;
+          outline: none;
+          transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+          box-shadow: 0px 0px 20px -18px;
+        }
+
+        .search:hover {
+          border: 2px solid lightgrey;
+          box-shadow: 0px 0px 20px -17px;
+        }
+
+        .search:active {
+          transform: scale(0.95);
+        }
+
+        .search:focus {
+          border: 2px solid grey;
+        }
+
+        fieldset {
+          width: 250%;
+          background: #171717;
+          border-radius: 10px;
+        }
+
         .error-message {
             color: red;
             text-align: left;
@@ -70,12 +121,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <nav class="nav">
       <div class="nav-left">
-        <a href="Accueil_Utilisateur.php" class="nav-brand">
+          <a href="Accueil_Utilisateur.php" class="nav-brand">
                     <img src="./assets/logo-1.png">
                   </a>
         <ul class="nav-menu">
           <li>
-            <a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>          
+            <div class="dropdown-container">
+              <a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>
+            </div>             
           </li>
         </ul>
         <ul>
@@ -93,9 +146,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </svg>
             <span href="Inscription.php"><?php echo htmlspecialchars($profile['Pseudo']); ?></span>
             <div class="profile-pic">
-              <?php if(file_exists($pp_pseudo_connecte)){ ?>
-                <img src="<?php echo htmlspecialchars($pp_pseudo_connecte); ?>" alt="Profile Pic">
-              <?php } ?>
+              <?php $photo='photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg';
+              if (!file_exists($photo)) {
+                $photo = 'photos_profil/default.jpg';
+              }
+              ?>
+              <img src="<?php echo htmlspecialchars($photo); ?>" alt="Profile Pic">
             </div>
           </a>
 
@@ -122,11 +178,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </nav></br>
     <div class="content">
       <form action="" method="post">
-        <h1><b>Entre le pseudo de la personne à qui tu veux envoyer un message !</b></h1>
       <fieldset>
         <div class="input_fields4">
-          <label for="pseudo">Pseudo :</label>
-          <input type="text" id="pseudo" name="pseudo" maxlength="50" placeholder="Entre le pseudo recherché" required>
+          <input class="search" type="text" id="pseudo" name="pseudo" maxlength="15" placeholder="Entre le pseudo de la personne à qui tu veux envoyer un message !" required>
           <?php if (isset($error_message)) : ?>
             <p class="error-message"><?php echo htmlspecialchars($error_message); ?></p>
           <?php endif; ?>
