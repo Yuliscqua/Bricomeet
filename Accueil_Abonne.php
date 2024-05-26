@@ -22,7 +22,7 @@
         </ul>
         <ul>
           <li>
-            <a href="#" class="nav-link">Messages</a>
+            <a href="Choice.php" class="nav-link">Messages</a>
           </li>
         </ul>
         <ul>
