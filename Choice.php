@@ -1,67 +1,58 @@
 <?php
-  session_start();
+session_start();
 
-  if (!isset($_SESSION['pseudo'])) {
+if (!isset($_SESSION['pseudo'])) {
     echo "Vous devez être connecté pour voir cette page.";
     exit;
-  }
+}
 
+$pseudo_connecte = $_SESSION['pseudo'];
+$pp_pseudo = 'photos_profil/pdp_' . $pseudo_connecte . '.jpg';
+$filename = 'bdd_users.txt';
 
-  $pseudo_connecte= $_SESSION['pseudo'];
-  $pp_pseudo='photos_profil/pdp_' . $pseudo_connecte . '.jpg';
-  
-  
-  $filename = 'bdd_users.txt';
-  $file = fopen($filename, "r");
-  $profile = null;
-  $is_admin = false;
-  $estAbonne = true;
+$is_admin = false;
+$estAbonne = true;
+$profile = null;
 
-  if ($file) {
-      while (($line = fgets($file)) !== false) {
-          $data = explode(",", trim($line));
-          if ($data[0] === $pseudo_connecte) {
-              if ($data[17] === 'admin'){
-                $is_admin = true;
-              }
-              if ($data[17] === 'user'){
-                $estAbonne = false;
-              }
-              $profile = [
-                  'Pseudo' => $data[0],
-                  'Nom' => $data[13],
-                  'Prénom' => $data[14],
-                  'Photo' => $pp_pseudo
-              ];
-          }
-      }
-      fclose($file);
-  } else {
-      echo "Erreur lors de l'ouverture du fichier.";
-      exit;
-  }
-  
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$utilisateurs = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+foreach ($utilisateurs as $utilisateur) {
+    $data = explode(",", trim($utilisateur));
+    if ($data[0] === $pseudo_connecte) {
+        $is_admin = ($data[17] === 'admin');
+        $estAbonne = ($data[17] !== 'user');
+        $profile = [
+            'Pseudo' => $data[0],
+            'Nom' => $data[13],
+            'Prénom' => $data[14],
+            'Photo' => $pp_pseudo
+        ];
+        break;
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pseudo = $_POST['pseudo'];
-    $chemin_fichier = __DIR__ . '/bdd_users.txt';
-    $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     $user_found = false;
+    
     foreach ($utilisateurs as $utilisateur) {
-      $donnees = explode(',', $utilisateur);
-      if ($donnees[0] === $pseudo && $pseudo != $_SESSION['pseudo']) {
-          $user_found = true;
-          $_SESSION['pseudo2'] = $donnees[0];
-          break;
-      }
+        $donnees = explode(',', $utilisateur);
+        if ($donnees[0] === $pseudo && $pseudo != $pseudo_connecte) {
+            $user_found = true;
+            $_SESSION['pseudo2'] = $donnees[0];
+            break;
+        }
     }
-    if($user_found){
-      header("Location: Chat.php");
-      exit;
+    
+    if ($user_found) {
+        header("Location: Chat.php");
+        exit;
     } else {
-      echo "<p style='color:red; txt-align:center;'>Cet utilisateur n'existe pas ! Ou alors c'est vous-même !</p>";
+      $error_message = "Cet utilisateur n'existe pas ! Ou alors c'est vous-même !";
     }
-  }
+}
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,6 +60,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Messagerie de <?php echo htmlspecialchars($profile['Prénom'] . ' ' . $profile['Nom']); ?></title>
   <link rel="stylesheet" type="text/css" href="Accueil.css">
+  <style>
+        .error-message {
+            color: red;
+            text-align: left;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 <nav class="nav">
@@ -144,7 +142,7 @@
           <label for="pseudo">Pseudo :</label>
           <input type="text" id="pseudo" name="pseudo" maxlength="50" placeholder="Entre le pseudo recherché" required>
           <?php if (isset($error_message)) : ?>
-                    <p style="color:red; text-align:center;"><?php echo $error_message; ?></p>
+            <p class="error-message"><?php echo htmlspecialchars($error_message); ?></p>
           <?php endif; ?>
         </div>
       </fieldset>
