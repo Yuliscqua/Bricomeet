@@ -551,3 +551,26 @@ margin-top: 8px;
     background-positon-x: 0px;
   }
 }
+
+.chatbody{position: fixed; bottom: 0; width: 100%; border-radius: 5px}
+.chatbody form{margin: 0}
+#msgbox{padding: 10px 10px; width: 50%; height: 50px; margin-bottom: 7px; border-radius: 5px}
+.btn-send{font-size: 20px; padding: 10px; font-weight: 300; border-radius: 5px}
+.first{
+  background-color: darkblue; 
+  text-align: center; 
+  padding: 10px 10px ; 
+  border:solid,black;
+  margin: 10px;
+}
+.second
+  {background-color: darkred; 
+  text-align: center; 
+  padding: 10px 10px; 
+  border:solid,black;
+  margin: 10px;
+}
+
+h1.name_chatted{
+  text-align: center;
+}
