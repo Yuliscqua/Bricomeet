@@ -12,5 +12,7 @@ Bienvenue dans notre site !
   
 Fonctionnalités
 -
-- Créer des profils personnalisés
-- Envoyer des messages à d'autres utilisateurs 
+Ce site vous permet de :
+- Créer des profils personnalisés et personnels
+- Envoyer des messages à d'autres utilisateurs
+-  
