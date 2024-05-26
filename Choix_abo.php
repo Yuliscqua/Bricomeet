@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         file_put_contents($chemin_fichier, implode(PHP_EOL, $nouveaux_utilisateurs) . PHP_EOL);
 
-        header("Location: Accueil_Utilisateur.php");
+        header("Location: Accueil_Abonne.php");
         exit;
     } elseif (isset($_POST['annuler_abonnement'])) {
         $nouveaux_utilisateurs = [];
