@@ -74,7 +74,9 @@ $last_five_users = array_slice($lines, -5);
             </svg>
             <span><?php echo htmlspecialchars($_SESSION['pseudo']); ?></span>
             <div class="profile-pic">
-              <img src="<?php echo 'photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg'; ?>" alt="Profile Pic">
+              <?php if(file_exists('photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg')){ ?>
+                <img src="<?php echo 'photos_profil/pdp_' . $_SESSION['pseudo'] . '.jpg'; ?>" alt="Profile Pic">
+              <?php } ?>
             </div>
           </a>
 
