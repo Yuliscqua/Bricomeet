@@ -7,7 +7,7 @@ if (!isset($_SESSION['pseudo'])) {
 }
 
 $pseudo_connecte = $_SESSION['pseudo'];
-$pp_pseudo = 'photos_profil/pdp_' . $pseudo_connecte . '.jpg';
+$pp_pseudo_connecte = 'photos_profil/pdp_' . $pseudo_connecte . '.jpg';
 $filename = 'bdd_users.txt';
 
 $is_admin = false;
@@ -25,7 +25,6 @@ foreach ($utilisateurs as $utilisateur) {
             'Pseudo' => $data[0],
             'Nom' => $data[13],
             'Prénom' => $data[14],
-            'Photo' => $pp_pseudo
         ];
         break;
     }
@@ -109,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </svg>
             <span href="Inscription.php"><?php echo htmlspecialchars($profile['Pseudo']); ?></span>
             <div class="profile-pic">
-              <img src="<?php echo htmlspecialchars($profile['Photo']); ?>" alt="Profile Pic">
+              <img src="<?php echo htmlspecialchars($pp_pseudo_connecte); ?>" alt="Profile Pic">
             </div>
           </a>
 
