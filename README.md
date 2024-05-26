@@ -15,4 +15,14 @@ Fonctionnalités
 Ce site vous permet de :
 - Créer des profils personnalisés et personnels
 - Envoyer des messages à d'autres utilisateurs
--  
+
+Stockage
+-
+Ce site utilise des fichiers .txt pour stocker toutes les données, notamment :
+
+- Les données utilisateur
+- Les messages envoyés
+- Les messages signalés
+- Les utilisateurs bloqués
+
+Il est donc limité en sécurité et en taille. Attention à vos données sensibles !
