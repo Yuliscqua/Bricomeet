@@ -577,191 +577,174 @@ h1 {
       </div>
     </nav>
     <div class="container">
-        <h1>Profil de <?php echo htmlspecialchars($profile['Pseudo']); ?></h1>
-        <div class="profile-photo">
+      <h1>Profil de <?php echo htmlspecialchars($profile['Pseudo']); ?></h1>
+      <div class="profile-photo">
           <img src="<?php echo htmlspecialchars($profile['Photo']); ?>" alt="Photo de profil">
           <form method="POST" action="modifier_profil.php" enctype="multipart/form-data" style="margin-left: 200px;">
-              <input type="hidden" name="field" value="Photo">
+              <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
               <input type="file" name="photo" accept="image/png, image/jpeg">
               <button type="submit">Modifier la photo de profil</button>
           </form>
-        </div>
-        <?php
-        if (!$is_editable && !$estBloque) {
-            echo '<form method="POST">
-                    <input type="hidden" name="pseudo" value="' . htmlspecialchars($profile['Pseudo']) . '">
-                    <button type="submit" name="bloquer">Bloquer cet utilisateur</button>
-                  </form>';
-        }
-        if ($estBloque) {
-          echo '<form method="POST">
+      </div>
+      <?php
+      if (!$is_editable && !$estBloque) {
+          echo '<form method="POST" action="bloquer_utilisateur.php">
+                  <input type="hidden" name="pseudo" value="' . htmlspecialchars($profile['Pseudo']) . '">
+                  <button type="submit" name="bloquer">Bloquer cet utilisateur</button>
+                </form>';
+      }
+      if ($estBloque) {
+          echo '<form method="POST" action="debloquer_utilisateur.php">
                   <input type="hidden" name="pseudo" value="' . htmlspecialchars($profile['Pseudo']) . '">
                   <button type="submit" name="debloquer">Débloquer cet utilisateur</button>
                 </form>';
-        }
-        ?>
-        <div class="profile-info">
-            <div><strong>Sexe :</strong>
+      }
+      ?>
+      <div class="profile-info">
+          <div><strong>Sexe :</strong>
               <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Sexe">
-                  <select name="value">
-                    <option value="Homme" <?php if ($profile['Sexe'] === 'Homme') echo 'selected'; ?>>Homme</option>
-                    <option value="Femme" <?php if ($profile['Sexe'] === 'Femme') echo 'selected'; ?>>Femme</option>
-                    <option value="Autre" <?php if ($profile['Sexe'] === 'Autre') echo 'selected'; ?>>Autre</option>
-                  </select>
-                  <button type="submit">Modifier</button>
-                </form>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Sexe">
+                      <select name="value">
+                          <option value="Homme" <?php if ($profile['Sexe'] === 'Homme') echo 'selected'; ?>>Homme</option>
+                          <option value="Femme" <?php if ($profile['Sexe'] === 'Femme') echo 'selected'; ?>>Femme</option>
+                          <option value="Autre" <?php if ($profile['Sexe'] === 'Autre') echo 'selected'; ?>>Autre</option>
+                      </select>
+                      <button type="submit">Modifier</button>
+                  </form>
               <?php else : ?>
-                <?php echo htmlspecialchars($profile['Sexe']); ?>
+                  <?php echo htmlspecialchars($profile['Sexe']); ?>
               <?php endif; ?>
-            </div>            
-            <div><strong>Date de naissance :</strong> 
+          </div>            
+          <div><strong>Date de naissance :</strong> 
               <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Date de naissance">
-                  <input type="date" name="value" value="<?php echo htmlspecialchars($profile['Date de naissance']); ?>">
-                  <button type="submit">Modifier</button>
-                </form>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Date de naissance">
+                      <input type="date" name="value" value="<?php echo htmlspecialchars($profile['Date de naissance']); ?>">
+                      <button type="submit">Modifier</button>
+                  </form>
               <?php else : ?>
-                <?php echo htmlspecialchars($profile['Date de naissance']); ?>
+                  <?php echo htmlspecialchars($profile['Date de naissance']); ?>
               <?php endif; ?>
-            </div>
-            <div><strong>Profession :</strong>
+          </div>
+          <div><strong>Profession :</strong>
               <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Profession">
-                  <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Profession']); ?>">
-                  <button type="submit">Modifier</button>
-                </form>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Profession">
+                      <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Profession']); ?>">
+                      <button type="submit">Modifier</button>
+                  </form>
               <?php else : ?>
-                <?php echo htmlspecialchars($profile['Profession']); ?>
+                  <?php echo htmlspecialchars($profile['Profession']); ?>
               <?php endif; ?>
-            </div>
-            <div><strong>Pays :</strong>
+          </div>
+          <div><strong>Pays :</strong>
               <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Pays">
-                  <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Pays']); ?>">
-                  <button type="submit">Modifier</button>
-                </form>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Pays">
+                      <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Pays']); ?>">
+                      <button type="submit">Modifier</button>
+                  </form>
               <?php else : ?>
-                <?php echo htmlspecialchars($profile['Pays']); ?>
+                  <?php echo htmlspecialchars($profile['Pays']); ?>
               <?php endif; ?>
-            </div>            
-            <div><strong>Département :</strong>
+          </div>            
+          <div><strong>Département :</strong>
               <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="departement">
-                  <input type="text" name="value" value="<?php echo htmlspecialchars($profile['departement']); ?>">
-                  <button type="submit">Modifier</button>
-                </form>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="departement">
+                      <input type="text" name="value" value="<?php echo htmlspecialchars($profile['departement']); ?>">
+                      <button type="submit">Modifier</button>
+                  </form>
               <?php else : ?>
-                <?php echo htmlspecialchars($profile['departement']); ?>
+                  <?php echo htmlspecialchars($profile['departement']); ?>
               <?php endif; ?>
-            </div>
-            <div><strong>Ville :</strong>
+          </div>
+          <div><strong>Ville :</strong>
               <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Ville">
-                  <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Ville']); ?>">
-                  <button type="submit">Modifier</button>
-                </form>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Ville">
+                      <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Ville']); ?>">
+                      <button type="submit">Modifier</button>
+                  </form>
               <?php else : ?>
-                <?php echo htmlspecialchars($profile['Ville']); ?>
+                  <?php echo htmlspecialchars($profile['Ville']); ?>
               <?php endif; ?>
-            </div>
-            <div><strong>Statut marital :</strong>
-            <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Statut marital">
-                  <select name="value">
-                    <option value="Célibataire" <?php if ($profile['Statut marital'] === 'Célibataire') echo 'selected'; ?>>Célibataire</option>
-                    <option value="En couple" <?php if ($profile['Statut marital'] === 'En couple') echo 'selected'; ?>>En couple</option>
-                    <option value="Marié(e)" <?php if ($profile['Statut marital'] === 'Marié(e)') echo 'selected'; ?>>Marié(e)</option>
-                    <option value="Divorcé(e)" <?php if ($profile['Statut marital'] === 'Divorcé(e)') echo 'selected'; ?>>Divorcé(e)</option>
+          </div>
+          <div><strong>Statut marital :</strong>
+              <?php if ($is_admin || $is_editable) : ?>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Statut marital">
+                      <select name="value">
+                          <option value="Célibataire" <?php if ($profile['Statut marital'] === 'Célibataire') echo 'selected'; ?>>Célibataire</option>
+                          <option value="En couple" <?php if ($profile['Statut marital'] === 'En couple') echo 'selected'; ?>>En couple</option>
+                          <option value="Marié(e)" <?php if ($profile['Statut marital'] === 'Marié(e)') echo 'selected'; ?>>Marié(e)</option>
+                          <option value="Divorcé(e)" <?php if ($profile['Statut marital'] === 'Divorcé(e)') echo 'selected'; ?>>Divorcé(e)</option>
+                      </select>
+                      <button type="submit">Modifier</button>
+                  </form>
+              <?php else : ?>
+                  <?php echo htmlspecialchars($profile['Statut marital']); ?>
+              <?php endif; ?>
+          </div> 
+          <div><strong>Enfants :</strong>
+              <?php if ($is_admin || $is_editable) : ?>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Enfants">
+                      <input placeholder="<?php echo htmlspecialchars($profile['Enfants']); ?>" type="number" id="Enfants" name="value" min="0" max="10" maxlength="2" step="1"/>
+                      <button type="submit">Modifier</button>
+                  </form>
+              <?php else : ?>
+                  <?php echo htmlspecialchars($profile['Enfants']); ?>
+              <?php endif; ?>
+          </div>
+          <div><strong>Taille (cm) :</strong>
+              <?php if ($is_admin || $is_editable) : ?>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Taille (cm)">
+                      <input placeholder="<?php echo htmlspecialchars($profile['Taille (cm)']); ?>" type="number" id="taille" name="value" min="100" max="220" maxlength="2" step="1"/>
+                      <button type="submit">Modifier</button>
+                  </form>
+              <?php else : ?>
+                  <?php echo htmlspecialchars($profile['Taille (cm)']); ?>
+              <?php endif; ?>
+          </div>
+          <div><strong>Poids (kg) :</strong>
+              <?php if ($is_admin || $is_editable) : ?>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Poids (kg)">
+                      <input placeholder="<?php echo htmlspecialchars($profile['Poids (kg)']); ?>" type="number" id="poids" name="value" min="30" max="200" maxlength="2" step="1"/>
+                      <button type="submit">Modifier</button>
+                  </form>
+              <?php else : ?>
+                  <?php echo htmlspecialchars($profile['Poids (kg)']); ?>
+              <?php endif; ?>
+          </div>
+          <div><strong>Description :</strong>
+              <?php if ($is_admin || $is_editable) : ?>
+                  <form method="POST" action="modifier_profil.php">
+                      <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
+                      <input type="hidden" name="field" value="Description">
+                      <textarea name="value" rows="5"><?php echo htmlspecialchars($profile['Description']); ?></textarea>
+                      <button type="submit">Modifier</button>
+                  </form>
+              <?php else : ?>
+                  <?php echo nl2br(htmlspecialchars($profile['Description'])); ?>
+              <?php endif; ?>
+          </div>
+      </div>
+  </div>
 
-                  </select>
-                  <button type="submit">Modifier</button>
-                </form>
-              <?php else : ?>
-                <?php echo htmlspecialchars($profile['Statut marital']); ?>
-              <?php endif; ?>
-            </div> 
-            <div><strong>Enfants :</strong> <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Enfants">
-                  <input placeholder="<?php echo htmlspecialchars($profile['Enfants']); ?>" type="number" id="Enfants" name="Enfants" min="0" max="10" maxlength="2" step="1"/>
-                  <button type="submit">Modifier</button>
-                </form>
-              <?php else : ?>
-                <?php echo htmlspecialchars($profile['Enfants']); ?>
-              <?php endif; ?></div>
-              <div><strong>Taille (cm) :</strong> <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="taille">
-                  <input placeholder="<?php echo htmlspecialchars($profile['Taille (cm)']); ?>" type="number" id="taille" name="taille" min="0" max="10" maxlength="2" step="1"/>
-                  <button type="submit">Modifier</button>
-                </form>
-              <?php else : ?>
-                <?php echo htmlspecialchars($profile['Ville']); ?>
-              <?php endif; ?></div>
-              <div><strong>Poids (kg) :</strong> <?php if ($is_admin || $is_editable) : ?>
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Poids (kg)">
-                  <input placeholder="<?php echo htmlspecialchars($profile['Poids (kg)']); ?>" type="number" id="Poids (kg)" name="Poids (kg)" min="0" max="10" maxlength="2" step="1"/>
-                  <button type="submit">Modifier</button>
-                </form>
-              <?php else : ?>
-                <?php echo htmlspecialchars($profile['Poids (kg)']); ?>
-              <?php endif; ?></div>   
-              <?php if ($is_admin || $is_editable) : ?>         
-              <div><strong>Adresse :</strong> 
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Adresse">
-                  <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Adresse']); ?>">
-                  <button type="submit">Modifier</button>
-                </form>
-              <?php endif; ?></div>
-              <?php if ($is_admin || $is_editable) : ?>         
-              <div><strong>Prénom :</strong> 
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Prénom">
-                  <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Prénom']); ?>">
-                  <button type="submit">Modifier</button>
-                </form>
-              <?php endif; ?></div>
-              <?php if ($is_admin || $is_editable) : ?>         
-              <div><strong>Nom :</strong> 
-                <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Nom">
-                  <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Nom']); ?>">
-                  <button type="submit">Modifier</button>
-                </form>
-              <?php endif; ?></div>
-              <div><strong>Date d'inscription :</strong> 
-                <?php echo htmlspecialchars($profile['Date d\'inscription']); ?></div>
-              </div>
-              <div class="bio"><strong>Description :</strong>
-                <?php if ($is_admin || $is_editable) : ?>
-              <form method="POST" action="modifier_profil.php">
-                  <input type="hidden" name="field" value="Description">
-                  <textarea name="value"><?php echo htmlspecialchars($profile['Description']); ?></textarea>
-                  <button type="submit">Modifier</button>
-              </form>
-          <?php else : ?>
-              <p><?php echo htmlspecialchars($profile['Description']); ?></p>
-          <?php endif; ?>
-        </div>
-        <div class="delete_profile">
-          <?php if ($is_admin) : ?>
-            <form method="POST" action="supprimer_profil.php">
-                <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
-                <button type="submit">Supprimer ce profil</button>
-            </form>
-          <?php endif; ?>
-        </div>
-    </div>
     <footer class="footer">
       <div class="waves">
         <div class="wave" id="wave1"></div>
