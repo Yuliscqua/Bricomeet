@@ -4,3 +4,4 @@ Le site de rencontre pour les bricoleurs du dimanche qui cherchent l'amour entre
 Fonctionnalités
 -
 - Créer des profils personnalisés
+- Envoyer des messages à d'autres utilisateurs 
