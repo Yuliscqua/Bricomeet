@@ -23,14 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach ($utilisateurs as $utilisateur) {
             $donnees = explode(',', $utilisateur);
             if ($donnees[0] === $pseudo) {
-                $donnees[count($donnees) - 2] = $abonnement;
+                $donnees[count($donnees) - 1] = $abonnement;
             }
             $nouveaux_utilisateurs[] = implode(',', $donnees);
         }
 
         file_put_contents($chemin_fichier, implode(PHP_EOL, $nouveaux_utilisateurs) . PHP_EOL);
 
-        header("Location: Accueil_Abonne.php");
+        header("Location: Accueil_Utilisateur.php");
         exit;
     } elseif (isset($_POST['annuler_abonnement'])) {
         $nouveaux_utilisateurs = [];
@@ -217,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </head>
   <body>
     <?php if ($deja_abonne): ?>
-      <a href="Accueil_Abonne.php" class="nav-brand">
+      <a href="Accueil_Utilisateur.php" class="nav-brand">
       <img src="./assets/logo-1.png">
       </a>  
             <div class="deja-abo">

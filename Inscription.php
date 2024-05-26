@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="fields">
                 <div class="input_fields2">
                 <label for="pseudo">Pseudo* :</label>
-                <input type="text" id="pseudo" name="pseudo" maxlength="50" placeholder="Entre ton pseudo" required>
+                <input type="text" id="pseudo" name="pseudo" maxlength="15" placeholder="Entre ton pseudo" required>
                 <div id="pseudo-feedback"></div>
                 </div>
                 <div class="input_fields2">
@@ -149,10 +149,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="fields">
                 <div class="input_fields2">
                 <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" placeholder="Entre ton vrai nom"></div>
+                <input type="text" id="nom" name="nom" maxlength="20" placeholder="Entre ton vrai nom"></div>
                 <div class="input_fields2">
                 <label for="prénom">Prénom</label>
-                <input type="text" id="prénom" name="prénom" placeholder="Entre ton vrai prénom"></div></div>
+                <input type="text" id="prénom" name="prénom" maxlength="15" placeholder="Entre ton vrai prénom"></div></div>
                 <div class="fields">
                 <div class="input_fields2">
                 <label for="adresse">Adresse complète</label>

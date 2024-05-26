@@ -18,15 +18,6 @@ if ($pseudo_connecte === $pseudo) {
 
 $chemin_fichier = __DIR__ . '/bdd_users.txt';
 $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-$estAbonne = true;
-foreach ($utilisateurs as $utilisateur) {
-  $donnees = explode(',', $utilisateur);
-  if ($donnees[0] === $pseudo && $donnees[count($donnees) - 2] == "user" ) {
-      $estAbonne = true;
-      break;
-  }
-}
-
 
 $filename = 'bdd_users.txt';
 $file = fopen($filename, "r");
@@ -482,33 +473,18 @@ h1 {
 </head>
 <body>
 <nav class="nav">
-      <div class="nav-left">
-      <?php
-        if ($estAbonne) {
-            echo '<a href="Accueil_Abonne.php" class="nav-brand">
-                    <img src="./assets/logo-1.png">
-                  </a>';
-        } else {
-            echo '<a href="Accueil_Utilisateur.php" class="nav-brand">
-                    <img src="./assets/logo-1.png">
-                  </a>';
-        }
-      ?>
-
+  <div class="nav-left">
+      <a href="Accueil_Utilisateur.php" class="nav-brand">
+        <img src="./assets/logo-1.png">
+      </a>
         <ul class="nav-menu">
           <li>
-            <?php
-              if ($estAbonne) {
-                  echo '<a href="Accueil_Abonne.php" class="nav-link">Accueil</a>';
-              } else {
-                  echo '<a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>';
-              }
-            ?>             
+            <a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>             
           </li>
         </ul>
         <ul>
           <li>
-            <a href="#" class="nav-link">Rechercher</a>
+            <a href="Recherche.php" class="nav-link">Rechercher</a>
           </li>
         </ul>
       </div>
@@ -519,7 +495,7 @@ h1 {
               <path fill="none" d="M0 0h24v24H0z"></path>
               <path fill="#F2F2F2" d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
             </svg>
-            <span href="Inscription.php"><?php echo htmlspecialchars($_SESSION['pseudo']); ?></span>
+            <span><?php echo htmlspecialchars($_SESSION['pseudo']); ?></span>
             <div class="profile-pic">
               <img src="<?php echo htmlspecialchars($pp_pseudo_connecte); ?>" alt="Profile Pic">
             </div>
@@ -533,8 +509,14 @@ h1 {
               </svg>
               <span>Messages</span>
             </a>
-            <a href="#">
-              <span>Paramètres</span>
+            <a href="Profil.php">
+              <svg id="Layer_1" version="1.1" viewBox="0 0 150 150" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"width="20" height="20">
+                <g>
+                  <path fill="#D1D5DB" d="M30,49c0,18.7,15.3,34,34,34s34-15.3,34-34S82.7,15,64,15S30,30.3,30,49z M90,49c0,14.3-11.7,26-26,26S38,63.3,38,49   s11.7-26,26-26S90,34.7,90,49z"/>
+                  <path fill="#D1D5DB" d="M24.4,119.4C35,108.8,49,103,64,103s29,5.8,39.6,16.4l5.7-5.7C97.2,101.7,81.1,95,64,95s-33.2,6.7-45.3,18.7L24.4,119.4z"/>
+                </g>
+              </svg>
+              <span>Profil</span>
             </a>
             <a href="Accueil.html">
               <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" height="20">
@@ -695,11 +677,11 @@ h1 {
                   <button type="submit">Modifier</button>
                 </form>
               <?php endif; ?></div>
-            <div><strong>Date d'inscription :</strong> <?php echo htmlspecialchars($profile['Date d\'inscription']); ?></div>
-        </div>
-        <div class="bio">
-            <strong>Description :</strong>
-            <?php if ($is_admin || $is_editable) : ?>
+              <div><strong>Date d'inscription :</strong> 
+                <?php echo htmlspecialchars($profile['Date d\'inscription']); ?></div>
+              </div>
+              <div class="bio"><strong>Description :</strong>
+                <?php if ($is_admin || $is_editable) : ?>
               <form method="POST" action="modifier_profil.php">
                   <input type="hidden" name="field" value="Description">
                   <textarea name="value"><?php echo htmlspecialchars($profile['Description']); ?></textarea>

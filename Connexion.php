@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($connexion_reussie) {
-        header("Location: Accueil_Abonne.php");
+        header("Location: Accueil_Utilisateur.php");
         exit;
     } else {
         $message_erreur = "Pseudo ou mot de passe incorrect";

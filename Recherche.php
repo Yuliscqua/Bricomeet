@@ -62,6 +62,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'Rôle' => $data[17],
                 'Photo' => $photo_url
             ];
+
+            if (count($data) > 1 && $data[0] === $_SESSION['pseudo']) {
+              // La dernière donnée de la ligne est le rôle
+              $_SESSION['role'] = $data[17];   
+          }
         }
         fclose($file);
     } else {
@@ -424,6 +429,17 @@ margin-top: 8px;
           </li>
         </ul>
         <ul>
+          <?php if ($_SESSION['role'] == 'user'): ?>
+            <li>
+            <a href="Choix_abo.php" class="nav-link">Abonnements</a>
+            </li>
+          <?php else: ?>
+            <li>
+              <a href="Choice.php" class="nav-link">Messages</a>
+            </li>
+          <?php endif; ?>
+        </ul>
+        <ul>
           <li>
             <a href="#" class="nav-link">Rechercher</a>
           </li>
@@ -450,8 +466,14 @@ margin-top: 8px;
               </svg>
               <span>Messages</span>
             </a>
-            <a href="#">
-              <span>Paramètres</span>
+            <a href="Profil.php">
+              <svg id="Layer_1" version="1.1" viewBox="0 0 150 150" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"width="20" height="20">
+                <g>
+                  <path fill="#D1D5DB" d="M30,49c0,18.7,15.3,34,34,34s34-15.3,34-34S82.7,15,64,15S30,30.3,30,49z M90,49c0,14.3-11.7,26-26,26S38,63.3,38,49   s11.7-26,26-26S90,34.7,90,49z"/>
+                  <path fill="#D1D5DB" d="M24.4,119.4C35,108.8,49,103,64,103s29,5.8,39.6,16.4l5.7-5.7C97.2,101.7,81.1,95,64,95s-33.2,6.7-45.3,18.7L24.4,119.4z"/>
+                </g>
+              </svg>
+              <span>Profil</span>
             </a>
             <a href="Accueil.html">
               <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" height="20">
@@ -464,7 +486,7 @@ margin-top: 8px;
       </div>
     </nav>
     <div class="container">
-        <h2 class="titre"><a id="wrapper" href="#wrapper">Derniers Inscrits</a></h2>
+        <h2 class="titre"><a id="wrapper" href="#wrapper">Rechercher</a></h2>
         <form action="" method="post">
             <div>
                 <label for="pseudo">Pseudo :</label>

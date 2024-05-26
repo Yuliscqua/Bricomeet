@@ -115,7 +115,7 @@ if ($file = fopen($filename, "r")) {
                 <img src="./assets/logo-1.png">
             </a>
             <ul class="nav-menu">
-                <li><a href="Accueil_Abonne.php" class="nav-link">Accueil</a></li>
+                <li><a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a></li>
                 <li><a href="Choice.php" class="nav-link">Messages</a></li>
                 <li><a href="Recherche.php" class="nav-link">Rechercher</a></li>
             </ul>
@@ -131,7 +131,15 @@ if ($file = fopen($filename, "r")) {
                 </a>
                 <div class="dropdown-menu profile-dropdown">
                     <a href="#"><span>Envoyer un commentaire</span></a>
-                    <a href="Profil.php"><span>Profil</span></a>
+                    <a href="Profil.php">
+              <svg id="Layer_1" version="1.1" viewBox="0 0 150 150" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"width="20" height="20">
+                <g>
+                  <path fill="#D1D5DB" d="M30,49c0,18.7,15.3,34,34,34s34-15.3,34-34S82.7,15,64,15S30,30.3,30,49z M90,49c0,14.3-11.7,26-26,26S38,63.3,38,49   s11.7-26,26-26S90,34.7,90,49z"/>
+                  <path fill="#D1D5DB" d="M24.4,119.4C35,108.8,49,103,64,103s29,5.8,39.6,16.4l5.7-5.7C97.2,101.7,81.1,95,64,95s-33.2,6.7-45.3,18.7L24.4,119.4z"/>
+                </g>
+              </svg>
+              <span>Profil</span>
+            </a>
                     <a href="Accueil.html"><span>Se déconnecter</span></a>
                 </div>
             </div>

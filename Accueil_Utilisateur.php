@@ -1,5 +1,24 @@
 <?php
   session_start();
+
+  $filename = 'bdd_users.txt';
+  $file = fopen($filename, "r");
+
+  if ($file) {
+    while (($line = fgets($file)) !== false) {
+        $data = explode(",", trim($line));
+        
+        if (count($data) > 1 && $data[0] === $_SESSION['pseudo']) {
+            // La dernière donnée de la ligne est le rôle
+            $_SESSION['role'] = $data[count($data) - 1];
+            break;
+        }
+    }
+    fclose($file);
+  } else {
+    echo "Erreur lors de l'ouverture du fichier.";
+    exit;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +44,15 @@
           </li>
         </ul>
         <ul>
-          <li>
+          <?php if ($_SESSION['role'] == 'user'): ?>
+            <li>
             <a href="Choix_abo.php" class="nav-link">Abonnements</a>
-          </li>
+            </li>
+          <?php else: ?>
+            <li>
+              <a href="Choice.php" class="nav-link">Messages</a>
+            </li>
+          <?php endif; ?>
         </ul>
         <ul>
           <li>
