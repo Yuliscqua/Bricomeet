@@ -587,18 +587,7 @@ h1 {
           </form>
       </div>
       <?php
-      if (!$is_editable && !$estBloque) {
-          echo '<form method="POST" action="bloquer_utilisateur.php">
-                  <input type="hidden" name="pseudo" value="' . htmlspecialchars($profile['Pseudo']) . '">
-                  <button type="submit" name="bloquer">Bloquer cet utilisateur</button>
-                </form>';
-      }
-      if ($estBloque) {
-          echo '<form method="POST" action="debloquer_utilisateur.php">
-                  <input type="hidden" name="pseudo" value="' . htmlspecialchars($profile['Pseudo']) . '">
-                  <button type="submit" name="debloquer">Débloquer cet utilisateur</button>
-                </form>';
-      }
+
       ?>
       <div class="profile-info">
           <div><strong>Sexe :</strong>
@@ -746,8 +735,8 @@ h1 {
               <?php if ($is_admin || $is_editable) : ?>
                   <form method="POST" action="modifier_profil.php">
                       <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
-                      <input type="hidden" name="field" value="Prenom">
-                      <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Prenom']); ?>">
+                      <input type="hidden" name="field" value="Prénom">
+                      <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Prénom']); ?>">
                       <button type="submit">Modifier</button>
                   </form>
               <?php else : ?>
