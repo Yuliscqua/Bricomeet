@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Bienvenue sur BricoMeet !</title>
 </head>
 <body>
-    <a href="Accueil.html" class="nav-brand">
+    <a href="Accueil.php" class="nav-brand">
         <img src="./assets/logo-1.png">
     </a>  
     <div class="content">

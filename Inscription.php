@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <title>Bienvenue sur BricoMeet !</title>
     </head>
     <body>
-        <a href="Accueil.html" class="nav-brand">
+        <a href="Accueil.php" class="nav-brand">
             <img src="./assets/logo-1.png">
         </a>  
         <div class="content">
@@ -163,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h3><input id="submit" type="submit" value="S'inscrire"></h3>
             </fieldset>
         </form>
-        <a href="Accueil.html">Retourner sur le site en tant que visiteur</a>
+        <a href="Accueil.php">Retourner sur le site en tant que visiteur</a>
     </div>
     </body>
 </html>
