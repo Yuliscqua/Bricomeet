@@ -686,7 +686,7 @@ h1 {
             <div><strong>Enfants :</strong> <?php if ($is_admin || $is_editable) : ?>
                 <form method="POST" action="modifier_profil.php">
                   <input type="hidden" name="field" value="Enfants">
-                  <input placeholder="Entre ton nombre d'enfants" type="number" id="Enfants" name="Enfants" min="0" max="10" maxlength="2" step="1"/>
+                  <input placeholder="<?php echo htmlspecialchars($profile['Enfants']); ?>" type="number" id="Enfants" name="Enfants" min="0" max="10" maxlength="2" step="1"/>
                   <button type="submit">Modifier</button>
                 </form>
               <?php else : ?>
@@ -695,7 +695,7 @@ h1 {
               <div><strong>Taille (cm) :</strong> <?php if ($is_admin || $is_editable) : ?>
                 <form method="POST" action="modifier_profil.php">
                   <input type="hidden" name="field" value="taille">
-                  <input placeholder="Entre ta taille" type="number" id="taille" name="taille" min="0" max="10" maxlength="2" step="1"/>
+                  <input placeholder="<?php echo htmlspecialchars($profile['Taille (cm)']); ?>" type="number" id="taille" name="taille" min="100" max="220" maxlength="2" step="1"/>
                   <button type="submit">Modifier</button>
                 </form>
               <?php else : ?>
@@ -704,7 +704,7 @@ h1 {
               <div><strong>Poids (kg) :</strong> <?php if ($is_admin || $is_editable) : ?>
                 <form method="POST" action="modifier_profil.php">
                   <input type="hidden" name="field" value="Poids (kg)">
-                  <input placeholder="Entre ton poids en kg" type="number" id="Poids (kg)" name="Poids (kg)" min="0" max="10" maxlength="2" step="1"/>
+                  <input placeholder="<?php echo htmlspecialchars($profile['Poids (kg)']); ?>" type="number" id="Poids (kg)" name="Poids (kg)" min="0" max="150" maxlength="2" step="1"/>
                   <button type="submit">Modifier</button>
                 </form>
               <?php else : ?>
