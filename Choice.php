@@ -70,27 +70,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <nav class="nav">
       <div class="nav-left">
-      <?php
-      if ($estAbonne) {
-            echo '<a href="Accueil_Abonne.php" class="nav-brand">
+        <a href="Accueil_Utilisateur.php" class="nav-brand">
                     <img src="./assets/logo-1.png">
-                  </a>';
-        } else {
-            echo '<a href="Accueil_Utilisateur.php" class="nav-brand">
-                    <img src="./assets/logo-1.png">
-                  </a>';
-        }
-      ?>
-
+                  </a>
         <ul class="nav-menu">
           <li>
-            <?php
-                if ($estAbonne) {
-                    echo '<a href="Accueil_Abonne.php" class="nav-link">Accueil</a>';
-                } else {
-                    echo '<a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>';
-                }
-            ?>               
+            <a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>          
           </li>
         </ul>
         <ul>
