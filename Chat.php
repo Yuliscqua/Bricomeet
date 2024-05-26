@@ -4,7 +4,10 @@ date_default_timezone_set('Europe/Paris');
 
 
 $user = $_SESSION['pseudo'];
-$is_admin= $_SESSION['is_admin'];
+if($_SESSION['role'] == 'admin') {
+    $is_admin= true;
+}else{$is_admin= false;
+}
 $chatter = $_SESSION['pseudo2'];
 $filename = 'messages.txt';
 $signalementsFilename = 'signalements.txt';
