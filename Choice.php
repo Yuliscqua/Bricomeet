@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </ul>
         <ul>
           <li>
-            <a href="#" class="nav-link">Rechercher</a>
+            <a href="Recherche.php" class="nav-link">Rechercher</a>
           </li>
         </ul>
       </div>
@@ -93,7 +93,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </svg>
             <span href="Inscription.php"><?php echo htmlspecialchars($profile['Pseudo']); ?></span>
             <div class="profile-pic">
-              <img src="<?php echo htmlspecialchars($pp_pseudo_connecte); ?>" alt="Profile Pic">
+              <?php if(file_exists($pp_pseudo_connecte)){ ?>
+                <img src="<?php echo htmlspecialchars($pp_pseudo_connecte); ?>" alt="Profile Pic">
+              <?php } ?>
             </div>
           </a>
 
