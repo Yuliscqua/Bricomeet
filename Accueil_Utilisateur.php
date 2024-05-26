@@ -115,6 +115,9 @@ $last_five_users = array_slice($lines, -5);
       <?php
         foreach ($last_five_users as $user_line) :
           $user_data = explode(",", $user_line);
+          if($user_data[0] === $_SESSION['pseudo']){
+            continue;
+          }
           $photo='photos_profil/pdp_' . $user_data[0] . '.jpg';
           if (!file_exists($photo)) {
             $photo = 'photos_profil/default.jpg';
