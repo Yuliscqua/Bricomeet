@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     file_put_contents($filename, implode("\n", $lines));
 
     // Redirection après la mise à jour
-    header('Location: profil.php');
+    header('Location: Profil.php');
     exit;
 }
 ?>
