@@ -19,7 +19,6 @@ $photo = false;
 $resultats = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer les données du formulaire
     $pseudo = isset($_POST['pseudo']) ? trim($_POST['pseudo']) : '';
     $description = isset($_POST['description']) ? trim($_POST['description']) : '';
     $age_min = isset($_POST['age_min']) ? (int)$_POST['age_min'] : 0;
@@ -28,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $interets = isset($_POST['interets']) ? trim($_POST['interets']) : '';
     $photo = isset($_POST['photo']);
 
-    // Lire le fichier texte
     $filename = 'bdd_users.txt';
     $file = fopen($filename, "r");
     $profiles = [];
@@ -64,9 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ];
 
             if (count($data) > 1 && $data[0] === $_SESSION['pseudo']) {
-              // La dernière donnée de la ligne est le rôle
               $_SESSION['role'] = $data[17];   
-          }
+            }
         }
         fclose($file);
     } else {
@@ -74,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Filtrer les profils
     foreach ($profiles as $profile) {
         $age = age_from_date_of_birth($profile['Date de naissance']);
         if ($pseudo && stripos($profile['Pseudo'], $pseudo) === false) continue;
@@ -486,7 +482,7 @@ margin-top: 8px;
       </div>
     </nav>
     <div class="container">
-        <h2 class="titre"><a id="wrapper" href="#wrapper">Rechercher</a></h2>
+      <h2 class="titre"><a id="wrapper" href="#wrapper">Rechercher</a></h2>
         <form action="" method="post">
             <div>
                 <label for="pseudo">Pseudo :</label>

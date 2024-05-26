@@ -4,6 +4,15 @@ session_start();
 $chemin_fichier = __DIR__ . '/bdd_users.txt';
 $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 $pseudo = $_SESSION['pseudo'];
+$deja_abonne = false;
+
+foreach ($utilisateurs as $utilisateur) {
+    $donnees = explode(',', $utilisateur);
+    if ($donnees[0] === $pseudo && ($donnees[count($donnees) - 2] == "subscriber_free" || $donnees[count($donnees) - 2] == "subscriber_classic" || $donnees[count($donnees) - 2] == "subscriber_god")) {
+        $deja_abonne = true;
+        break;
+    }
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['abonnement'])) {
@@ -29,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach ($utilisateurs as $utilisateur) {
             $donnees = explode(',', $utilisateur);
             if ($donnees[0] === $pseudo) {
-                $donnees[count($donnees) - 1] = 'user';
+                $donnees[count($donnees) - 2] = 'user';
             }
             $nouveaux_utilisateurs[] = implode(',', $donnees);
         }
@@ -206,7 +215,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
   </style>
   </head>
-  <body>  
+  <body>
+    <?php if ($deja_abonne): ?>
+      <a href="Accueil_Utilisateur.php" class="nav-brand">
+      <img src="./assets/logo-1.png">
+      </a>  
+            <div class="deja-abo">
+                <h1>Tu as déjà un abonnement !</h1><br>
+                <form method="post" action="" class="annuler-abonnement-form">
+                  <input type="hidden" name="annuler_abonnement" value="user"><br>
+                  <button type="submit">Souhaites-tu annuler ton abonnement ? Clique ici !</button>
+                </form>
+            </div>
+    <?php else: ?>
+      <a href="Accueil_Utilisateur.php" class="nav-brand">
+      <img src="./assets/logo-1.png">
+    </a>  
     <div class="abonnements">
       <div class="formules">
         <h2>Les formules proposées</h2>
@@ -268,5 +292,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <a class=quit1 href="Accueil_Utilisateur.php">Je ne suis pas intéréssé pour l'instant</a>
       </div>
     </div>  
+    <?php endif; ?>
+
   </body>
 </html>

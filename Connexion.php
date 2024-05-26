@@ -4,6 +4,7 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pseudo = $_POST['pseudo'];
     $mdp = $_POST['mdp'];
+    $remember_me = isset($_POST['remember_me']);
     $chemin_fichier = __DIR__ . '/bdd_users.txt';
     $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     $connexion_reussie = false;
@@ -14,6 +15,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $connexion_reussie = true;
             $_SESSION['pseudo'] = $pseudo;
             $_SESSION['role'] = $donnees[count($donnees) - 1];
+
+            if ($remember_me) {
+                setcookie('pseudo', $pseudo, time() + (86400 * 30), "/");
+                setcookie('mdp', $mdp, time() + (86400 * 30), "/");
+            } else {
+                if (isset($_COOKIE['pseudo'])) {
+                    setcookie('pseudo', '', time() - 3600, "/");
+                }
+                if (isset($_COOKIE['mdp'])) {
+                    setcookie('mdp', '', time() - 3600, "/");
+                }
+            }
+
             break;
         }
     }
@@ -55,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>
                 <div class="remembermdp">
                     <label>
-                        <input type="checkbox"> Se souvenir de moi ?
+                        <input type="checkbox" name="remember_me"> Se souvenir de moi ?
                     </label>
                 </div>
                 <h3><input id="submit" type="submit" value="Se connecter"></h3>

@@ -1,7 +1,10 @@
 <?php
 session_start();
+date_default_timezone_set('Europe/Paris');
+
 
 $user = $_SESSION['pseudo'];
+$is_admin= $_SESSION['is_admin'];
 $chatter = $_SESSION['pseudo2'];
 $filename = 'messages.txt';
 $signalementsFilename = 'signalements.txt';
@@ -32,7 +35,7 @@ function ajouterSignalement($donnees_signalement, $chemin_fichier) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['send']) && !empty($_POST['chat'])) {
         $messageId = uniqid();
-        $donnees_message = [$user, $chatter, htmlspecialchars($_POST['chat']), date('H:i:s'), $messageId];
+        $donnees_message = [$user, $chatter, htmlspecialchars($_POST['chat']), date('Y-m-d H:i:s'), $messageId];
         ajouterMessage($donnees_message, $filename);
     } elseif (isset($_POST['delete']) && !empty($_POST['message_id'])) {
         $messageId = htmlspecialchars($_POST['message_id']);
@@ -49,7 +52,8 @@ if ($file = fopen($filename, "r")) {
     while (($line = fgets($file)) !== false) {
         $data = explode(",", trim($line));
         if (($data[0] === $user && $data[1] === $chatter) || ($data[0] === $chatter && $data[1] === $user)) {
-            $messages[] = $data;
+          $data[3] = date('H:i', strtotime($data[3]));  
+          $messages[] = $data;
         }
     }
     fclose($file);
@@ -132,29 +136,29 @@ if ($file = fopen($filename, "r")) {
                 <div class="dropdown-menu profile-dropdown">
                     <a href="#"><span>Envoyer un commentaire</span></a>
                     <a href="Profil.php">
-              <svg id="Layer_1" version="1.1" viewBox="0 0 150 150" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"width="20" height="20">
-                <g>
-                  <path fill="#D1D5DB" d="M30,49c0,18.7,15.3,34,34,34s34-15.3,34-34S82.7,15,64,15S30,30.3,30,49z M90,49c0,14.3-11.7,26-26,26S38,63.3,38,49   s11.7-26,26-26S90,34.7,90,49z"/>
-                  <path fill="#D1D5DB" d="M24.4,119.4C35,108.8,49,103,64,103s29,5.8,39.6,16.4l5.7-5.7C97.2,101.7,81.1,95,64,95s-33.2,6.7-45.3,18.7L24.4,119.4z"/>
-                </g>
-              </svg>
-              <span>Profil</span>
-            </a>
+                      <svg id="Layer_1" version="1.1" viewBox="0 0 150 150" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"width="20" height="20">
+                        <g>
+                          <path fill="#D1D5DB" d="M30,49c0,18.7,15.3,34,34,34s34-15.3,34-34S82.7,15,64,15S30,30.3,30,49z M90,49c0,14.3-11.7,26-26,26S38,63.3,38,49   s11.7-26,26-26S90,34.7,90,49z"/>
+                          <path fill="#D1D5DB" d="M24.4,119.4C35,108.8,49,103,64,103s29,5.8,39.6,16.4l5.7-5.7C97.2,101.7,81.1,95,64,95s-33.2,6.7-45.3,18.7L24.4,119.4z"/>
+                        </g>
+                      </svg>
+                      <span>Profil</span>
+                    </a>
                     <a href="Accueil.html"><span>Se déconnecter</span></a>
                 </div>
             </div>
         </div>
     </nav>
-    <h1 class="name_chatted"><?php echo htmlspecialchars($chatter); ?></h1>
+    <h1 class="name_chatted"><a href="Profil.php?pseudo=<?php echo urlencode($chatter); ?>"><?php echo htmlspecialchars($chatter); ?></a></h1> <!-- Lien vers la page de profil -->
     <div class='framechat'>
         <?php foreach ($messages as $message): ?>
             <div class="<?php echo $message[0] === $user ? 'first' : 'second'; ?>">
                 <?php echo htmlspecialchars($message[2]); ?><br>
                 <?php echo htmlspecialchars($message[3]); ?>
-                <?php if ($message[0] === $user): ?>
+                <?php if ($message[0] === $user || $is_admin): ?>
                     <form method="post" style="display:inline;">
                         <input type="hidden" name="message_id" value="<?php echo htmlspecialchars($message[4]); ?>">
-                        <input type="submit" name="delete" value="Supprimer mon message">
+                        <input type="submit" name="delete" value="Supprimer le message">
                     </form>
                 <?php else: ?>
                     <button onclick="openModal('<?php echo htmlspecialchars($message[4]); ?>')">Signaler</button>
@@ -172,6 +176,7 @@ if ($file = fopen($filename, "r")) {
     </div>
     <?php endif; ?>
 
+    <?php if($is_admin === false): ?>
     <div id="reportModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -184,6 +189,8 @@ if ($file = fopen($filename, "r")) {
             </form>
         </div>
     </div>
+    <?php endif; ?>
+
 
     <script>
         function openModal(messageId) {

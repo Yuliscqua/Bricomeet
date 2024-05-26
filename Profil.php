@@ -19,6 +19,8 @@ if ($pseudo_connecte === $pseudo) {
 $chemin_fichier = __DIR__ . '/bdd_users.txt';
 $utilisateurs = file($chemin_fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
+
+
 $filename = 'bdd_users.txt';
 $file = fopen($filename, "r");
 $profile = null;
@@ -72,6 +74,46 @@ if (!$profile) {
     echo "Profil non trouvé.";
     exit;
 }
+
+$fichier_blocage = 'blocages.txt'; 
+$estBloque = false;
+if (file_exists($fichier_blocage)) {
+  $blocages = file($fichier_blocage, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  foreach ($blocages as $blocage) {
+      list($bloqueur, $bloque) = explode(':', $blocage);
+      if ($bloqueur === $pseudo_connecte && $bloque === $pseudo) {
+          $estBloque = true;
+          break;
+      }
+  }
+}
+
+
+if (isset($_POST['bloquer']) && $is_editable==false)  {
+  file_put_contents($fichier_blocage, "$pseudo_connecte:$pseudo\n", FILE_APPEND);
+  header("Location: Accueil_Utilisateur.php");
+  exit;
+}
+
+if (isset($_POST['debloquer'])) {
+  $utilisateur_a_debloquer = $_POST['pseudo'];
+  $utilisateur_connecte = $_SESSION['pseudo']; 
+  $fichier_blocage = 'blocages.txt'; 
+
+  $blocages = file($fichier_blocage, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  $nouveaux_blocages = array();
+  foreach ($blocages as $blocage) {
+      list($bloqueur, $bloque) = explode(':', $blocage);
+      if (!($bloqueur === $utilisateur_connecte && $bloque === $utilisateur_a_debloquer)) {
+          $nouveaux_blocages[] = $blocage;
+      }
+  }
+  file_put_contents($fichier_blocage, implode("\n", $nouveaux_blocages));
+
+  header("Location: profil.php?pseudo=$utilisateur_a_debloquer");
+  exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -473,13 +515,14 @@ h1 {
 </head>
 <body>
 <nav class="nav">
-  <div class="nav-left">
+<div class="nav-left">
       <a href="Accueil_Utilisateur.php" class="nav-brand">
         <img src="./assets/logo-1.png">
       </a>
+
         <ul class="nav-menu">
           <li>
-            <a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>             
+            <a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>                        
           </li>
         </ul>
         <ul>
@@ -538,6 +581,20 @@ h1 {
               <button type="submit">Modifier la photo de profil</button>
           </form>
         </div>
+        <?php
+        if (!$is_editable && !$estBloque) {
+            echo '<form method="POST">
+                    <input type="hidden" name="pseudo" value="' . htmlspecialchars($profile['Pseudo']) . '">
+                    <button type="submit" name="bloquer">Bloquer cet utilisateur</button>
+                  </form>';
+        }
+        if ($estBloque) {
+          echo '<form method="POST">
+                  <input type="hidden" name="pseudo" value="' . htmlspecialchars($profile['Pseudo']) . '">
+                  <button type="submit" name="debloquer">Débloquer cet utilisateur</button>
+                </form>';
+        }
+        ?>
         <div class="profile-info">
             <div><strong>Sexe :</strong>
               <?php if ($is_admin || $is_editable) : ?>
