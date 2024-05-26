@@ -1,24 +1,29 @@
 <?php
-  session_start();
+session_start();
 
-  $filename = 'bdd_users.txt';
-  $file = fopen($filename, "r");
+$filename = 'bdd_users.txt';
 
-  if ($file) {
-    while (($line = fgets($file)) !== false) {
-        $data = explode(",", trim($line));
-        
-        if (count($data) > 1 && $data[0] === $_SESSION['pseudo']) {
-            // La dernière donnée de la ligne est le rôle
-            $_SESSION['role'] = $data[count($data) - 1];
-            break;
-        }
-    }
-    fclose($file);
-  } else {
+// Récupérer toutes les lignes du fichier
+$lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+if ($lines === false) {
     echo "Erreur lors de l'ouverture du fichier.";
     exit;
-  }
+}
+
+// Mettre à jour le rôle de l'utilisateur dans la session
+foreach ($lines as $line) {
+    $data = explode(",", trim($line));
+    
+    if (count($data) > 1 && $data[0] === $_SESSION['pseudo']) {
+        $_SESSION['role'] = $data[count($data) - 1];
+        break;
+    }
+}
+
+// Récupérer les 5 derniers inscrits
+$last_five_users = array_slice($lines, -5);
+
 ?>
 
 <!DOCTYPE html>
@@ -102,44 +107,22 @@
     </nav>
     <h2 class="titre"><a id="wrapper" href="#wrapper">Derniers Inscrits</a></h2>
     <div class="wrapper">
-      <div class="card">
-          <img src="./assets/stock-photo-single-young-woman-assembling-pieces-of-new-furniture-231316309.jpg"/>
-          <div class="info">
-              <h1>Marie-Madeleine</h1>
-              <p>- Âge: 70 ans</br>- De: Montcul</p>
+      <?php
+        foreach ($last_five_users as $user_line) :
+          $user_data = explode(",", $user_line);
+          $photo='photos_profil/pdp_' . $user_data[0] . '.jpg';
+          if (!file_exists($photo)) {
+            $photo = 'photos_profil/default.jpg';
+          } 
+      ?>
+          <div class="card">
+            <img src="<?php echo htmlspecialchars($photo); ?>"/>
+            <div class="info">
+                <h1><?php echo htmlspecialchars($user_data[0]); ?></h1>
+                <p>- Date d'inscription: <?php echo htmlspecialchars($user_data[16]); ?></br>- De: <?php echo htmlspecialchars($user_data[7]); ?></p>
+            </div>
           </div>
-      </div>
-
-      <div class="card">
-          <img src="./assets/stock-photo-bearded-builder-isolated-on-white-background-professional-builder-with-tools-1488541394.jpg"/>
-          <div class="info">
-              <h1>Roberto Carlos</h1>
-              <p>- Âge: 22 ans</br>- De: Argenteuil</p>
-          </div>
-      </div>
-
-      <div class="card">
-        <img src="./assets/stock-photo-young-woman-renovating-her-bedroom-and-has-a-painter-carpet-in-her-hand-2161426729.jpg"/>
-        <div class="info">
-            <h1>x_RousseDu69_x</h1>
-            <p>- Âge: 44 ans</br>- De: Lyon</p>
-        </div>
-    </div>
-    <div class="card">
-      <img src="./assets/stock-photo-young-man-bricolage-working-at-home-165773783.jpg"/>
-      <div class="info">
-          <h1>Manu Macron</h1>
-          <p>- Âge: 18 ans</br>- De: Paris</p>
-      </div>
-    </div>
-
-      <div class="card">
-          <img src="./assets/stock-photo-pretty-young-woman-doing-diy-work-at-home-788769397.jpg"/>
-          <div class="info">
-              <h1>Shakira</h1>
-              <p>- Âge: 99 ans</br>- De: Marseille</p>
-          </div>
-      </div>
+        <?php endforeach; ?>
     </div>
     <div class="slider">
       <div class="slide-track">

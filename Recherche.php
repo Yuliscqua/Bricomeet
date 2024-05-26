@@ -19,6 +19,7 @@ $photo = false;
 $resultats = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Récupérer les données du formulaire
     $pseudo = isset($_POST['pseudo']) ? trim($_POST['pseudo']) : '';
     $description = isset($_POST['description']) ? trim($_POST['description']) : '';
     $age_min = isset($_POST['age_min']) ? (int)$_POST['age_min'] : 0;
@@ -27,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $interets = isset($_POST['interets']) ? trim($_POST['interets']) : '';
     $photo = isset($_POST['photo']);
 
+    // Lire le fichier texte
     $filename = 'bdd_users.txt';
     $file = fopen($filename, "r");
     $profiles = [];
@@ -62,8 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ];
 
             if (count($data) > 1 && $data[0] === $_SESSION['pseudo']) {
+              // La dernière donnée de la ligne est le rôle
               $_SESSION['role'] = $data[17];   
-            }
+          }
         }
         fclose($file);
     } else {
@@ -71,13 +74,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    // Filtrer les profils
     foreach ($profiles as $profile) {
         $age = age_from_date_of_birth($profile['Date de naissance']);
         if ($pseudo && stripos($profile['Pseudo'], $pseudo) === false) continue;
         if ($description && stripos($profile['Description'], $description) === false) continue;
         if ($age < $age_min || $age > $age_max) continue;
         if ($situation && $profile['Statut marital'] !== $situation) continue;
-        if ($interets && stripos($profile['Description'], $interets) === false) continue;
         if ($photo && $profile['Photo'] === 'photos_profil/default.jpg') continue;
         $resultats[] = $profile;
     }
@@ -328,6 +331,96 @@ ul {
   text-align: center;
 }
 
+.envoyer {
+  margin: 13px 0px 13px 200px;
+  position: relative;
+  background-color: #202020;
+  border-radius: 5px;
+  box-shadow: #252525 0px 4px 0px 0px;
+  padding: 15px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 145px;
+  height: 49px;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  transition: all 0.3s ease-in-out;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.envoyer::before {
+  content: "";
+  background-color: #353535;
+  width: 0;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: width 700ms ease-in-out;
+  display: inline-block;
+}
+
+.envoyer:hover::before {
+  width: 100%;
+}
+
+.rechercher {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #171717;
+  margin: 50px 100px 20px 100px;
+  border-radius: 10px;
+}
+
+.search {
+  display: flex;
+  width: 290%;
+  max-width: 370px;
+  height: 45px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1.5px solid lightgrey;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0px 0px 20px -18px;
+}
+
+.search:hover {
+  border: 2px solid lightgrey;
+  box-shadow: 0px 0px 20px -17px;
+}
+
+.search:active {
+  transform: scale(0.95);
+}
+
+.search:focus {
+  border: 2px solid grey;
+}
+
+.filtres {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.element {
+  padding: 0px 10px 0px 10px;
+}
+
+.result {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes de largeur égale */
+  gap: 20px; /* Espace entre les éléments, ajustez selon vos besoins */
+  padding: 20px 0px 100px 80px;
+}
+
 .profile {
   margin-bottom: 55px;
   width: 350px;
@@ -400,15 +493,123 @@ font-size: 15px;
 margin-top: 8px;
 }
 
-@keyframes scroll {
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #171717;
+  min-height: 100px;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.social-icon,
+.menu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.social-icon__item,
+.menu__item {
+  list-style: none;
+}
+
+.social-icon__link {
+  font-size: 2rem;
+  color: #fff;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+}
+.social-icon__link:hover {
+  transform: translateY(-10px);
+}
+
+.menu__link {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+  text-decoration: none;
+  opacity: 0.75;
+  font-weight: 300;
+}
+
+.menu__link:hover {
+  opacity: 1;
+}
+
+.footer p {
+  color: #fff;
+  margin: 15px 0 10px 0;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.wave {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url("./assets/wave.png");
+  background-size: 1000px 100px;
+}
+
+.wave#wave1 {
+  z-index: 1000;
+  opacity: 1;
+  bottom: 0;
+  animation: animateWaves 4s linear infinite;
+}
+
+.wave#wave2 {
+  z-index: 999;
+  opacity: 0.5;
+  bottom: 10px;
+  animation: animate 4s linear infinite !important;
+}
+
+.wave#wave3 {
+  z-index: 1000;
+  opacity: 0.2;
+  bottom: 15px;
+  animation: animateWaves 3s linear infinite;
+}
+
+.wave#wave4 {
+  z-index: 999;
+  opacity: 0.7;
+  bottom: 20px;
+  animation: animate 3s linear infinite;
+}
+
+@keyframes animateWaves {
   0% {
-      transform: translateX(0);
+    background-position-x: 1000px;
   }
   100% {
-      transform: translateX(calc(-250px * 4));
+    background-positon-x: 0px;
   }
 }
-    </style>
+
+@keyframes animate {
+  0% {
+    background-position-x: -1000px;
+  }
+  100% {
+    background-positon-x: 0px;
+  }
+}
+  </style>
 </head>
 <body>
 <nav class="nav">
@@ -482,25 +683,29 @@ margin-top: 8px;
       </div>
     </nav>
     <div class="container">
-      <h2 class="titre"><a id="wrapper" href="#wrapper">Rechercher</a></h2>
-        <form action="" method="post">
-            <div>
-                <label for="pseudo">Pseudo :</label>
-                <input type="text" id="pseudo" name="pseudo" maxlength="50" placeholder="Entre un pseudo" value="<?php echo htmlspecialchars($pseudo); ?>">
+        <form class="formulaire" action="" method="post">
+            <div class="rechercher">
+              <div>
+                <input class="search" type="text" id="pseudo" name="pseudo" maxlength="15" placeholder="Entre un pseudo" value="<?php echo htmlspecialchars($pseudo); ?>">
+              </div>
+              <div class="envoyer">
+                <button type="submit">Rechercher</button>
+              </div>
             </div>
-            <div>
-                <label for="description">Mots clés dans la description :</label>
+            <div class="filtres">
+              <div class="element">
+                <label for="description">Mots clés :</label>
                 <input type="text" id="description" name="description" maxlength="255" placeholder="Entre des mots clés" value="<?php echo htmlspecialchars($description); ?>">
-            </div>
-            <div>
+              </div>
+              <div class="element">
                 <label for="age_min">Âge minimum :</label>
                 <input type="number" id="age_min" name="age_min" min="0" max="120" value="<?php echo htmlspecialchars($age_min); ?>">
-            </div>
-            <div>
+              </div>
+              <div class="element">
                 <label for="age_max">Âge maximum :</label>
                 <input type="number" id="age_max" name="age_max" min="0" max="120" value="<?php echo htmlspecialchars($age_max); ?>">
-            </div>
-            <div>
+              </div>
+              <div class="element">
                 <label for="situation">Situation amoureuse :</label>
                 <select id="situation" name="situation">
                     <option value="">--Choisir une option--</option>
@@ -509,35 +714,26 @@ margin-top: 8px;
                     <option value="Marié(e)" <?php if ($situation == 'Marié(e)') echo 'selected'; ?>>Marié(e)</option>
                     <option value="Divorcé(e)" <?php if ($situation == 'Divorcé(e)') echo 'selected'; ?>>Divorcé(e)</option>
                 </select>
-            </div>
-            <div>
-                <label for="interets">Centres d'intérêts :</label>
-                <input type="text" id="interets" name="interets" maxlength="255" placeholder="Entre des centres d'intérêts" value="<?php echo htmlspecialchars($interets); ?>">
-            </div>
-            <div>
+              </div>
+              <div class="element">
                 <label>
                     <input type="checkbox" name="photo" <?php if ($photo) echo 'checked'; ?>> Avec photo de profil
                 </label>
-            </div>
-            <div>
-                <button type="submit">Rechercher</button>
-            </div>
-        </form>
-
-        
+              </div>
+            </div>  
+        </form>  
     </div>
-    <h2 class="titre"><a id="resultat" href="#resultat">Résultats de la recherche</a></h2>
+    <h2 class="titre"><a id="resultat" href="#resultat">Résultats</a></h2>
     <div class="result">
         <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
             <?php if (empty($resultats)): ?>
                 <p>Aucun profil ne correspond à vos critères de recherche.</p>
             <?php else: ?>
-                <?php foreach ($resultats as $profile): ?>
-                  <a href="Profil.php?pseudo=<?php echo urlencode($profile['Pseudo']); ?>">
+                <?php foreach ($resultats as $profile): ?>                  
                     <div class="profile">
                         <img src="<?php echo htmlspecialchars($profile['Photo']); ?>" alt="Photo de profil">
                         <div class="info">
-                            <h1><?php echo htmlspecialchars($profile['Pseudo']); ?></h2>
+                            <h1><a href="Profil.php?pseudo=<?php echo urlencode($profile['Pseudo']); ?>"><?php echo htmlspecialchars($profile['Pseudo']); ?></a></h1>
                             <p><strong>- Sexe :</strong> <?php echo htmlspecialchars($profile['Sexe']); ?></p>
                             <p><strong>- Âge :</strong> <?php echo ($profile['Date de naissance'] === "?" ? "Âge non défini" : htmlspecialchars(age_from_date_of_birth($profile['Date de naissance']))); ?></p>
                             <p><strong>- Profession :</strong> <?php echo htmlspecialchars($profile['Profession']); ?></p>
@@ -547,11 +743,42 @@ margin-top: 8px;
                             <p><strong>- Description :</strong> <?php echo htmlspecialchars($profile['Description']); ?></p>
                         </div>
                     </div>
-                    </a>
-                    <hr>
                 <?php endforeach; ?>
             <?php endif; ?>
         <?php endif; ?>
     </div>
+    <footer class="footer">
+      <div class="waves">
+        <div class="wave" id="wave1"></div>
+        <div class="wave" id="wave2"></div>
+        <div class="wave" id="wave3"></div>
+        <div class="wave" id="wave4"></div>
+      </div>
+      <ul class="social-icon">
+        <li class="social-icon__item"><a class="social-icon__link" href="https://github.com/Yuliscqua/Bricomeet">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="https://github.com/Yuliscqua/Bricomeet">
+            <ion-icon name="logo-twitter"></ion-icon>
+          </a></li>
+        <li class="social-icon__item">
+          <a class="social-icon__link" href="https://github.com/Yuliscqua/Bricomeet">
+            <ion-icon name="logo-linkedin"></ion-icon>
+         </a>
+        </li>
+        <li class="social-icon__item">
+          <a class="social-icon__link" href="https://github.com/Yuliscqua/Bricomeet">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+        </li>
+      </ul>
+      <ul class="menu">
+        <li class="menu__item"><a class="menu__link" href="Accueil_Utilisateur.php">Accueil</a></li>
+        <li class="menu__item"><a class="menu__link" href="Accueil_Utilisateur.php#presentation">A propos</a></li>
+      </ul>
+      <p>&copy;2024 BricoMeet | Tous droits réservés</p>
+    </footer>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
