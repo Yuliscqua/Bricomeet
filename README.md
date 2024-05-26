@@ -14,7 +14,9 @@ Fonctionnalités
 -
 Ce site vous permet de :
 - Créer des profils personnalisés et personnels
-- Envoyer des messages à d'autres utilisateurs
+- Devenir un abonné afin notamment de pouvoir envoyer des messages à d'autres utilisateurs
+- Modifier votre profil à volonté
+- Supprimer n'importe quel message envoyé
 
 Stockage
 -
@@ -26,3 +28,13 @@ Ce site utilise des fichiers .txt pour stocker toutes les données, notamment :
 - Les utilisateurs bloqués
 
 Il est donc limité en sécurité et en taille. Attention à vos données sensibles !
+
+Limitation
+-
+
+Les fonctionnalités suivantes n'ont pas été implantés :
+
+- Voir qui visite son profil lorsqu'on est abonné
+- Avoir accès à tous les messages lorsqu'on est un administrateur
+
+Réalisé par Maxence Rannou, Vivien Lambert et Clément De Lacoste De Laval
