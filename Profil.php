@@ -540,7 +540,9 @@ h1 {
             </svg>
             <span><?php echo htmlspecialchars($_SESSION['pseudo']); ?></span>
             <div class="profile-pic">
-              <img src="<?php echo htmlspecialchars($pp_pseudo_connecte); ?>" alt="Profile Pic">
+              <?php if(file_exists($pp_pseudo_connecte)){ ?>
+                <img src="<?php echo htmlspecialchars($pp_pseudo_connecte); ?>" alt="Profile Pic">
+              <?php } ?>
             </div>
           </a>
 
