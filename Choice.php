@@ -133,6 +133,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </ul>
         <ul>
           <li>
+              <a href="Choice.php" class="nav-link">Messages</a>
+            </li>
+        </ul>
+        <ul>
+          <li>
             <a href="Recherche.php" class="nav-link">Rechercher</a>
           </li>
         </ul>

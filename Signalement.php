@@ -381,7 +381,7 @@ ul {
     background-position-x: 1000px;
   }
   100% {
-    background-positon-x: 0px;
+    background-position-x: 0px;
   }
 }
 
@@ -390,8 +390,14 @@ ul {
     background-position-x: -1000px;
   }
   100% {
-    background-positon-x: 0px;
+    background-position-x: 0px;
   }
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
     </style>
 </head>

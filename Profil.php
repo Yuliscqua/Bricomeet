@@ -499,7 +499,7 @@ h1 {
     background-position-x: 1000px;
   }
   100% {
-    background-positon-x: 0px;
+    background-position-x: 0px;
   }
 }
 
@@ -508,7 +508,7 @@ h1 {
     background-position-x: -1000px;
   }
   100% {
-    background-positon-x: 0px;
+    background-position-x: 0px;
   }
 }
   </style>
@@ -524,6 +524,17 @@ h1 {
           <li>
             <a href="Accueil_Utilisateur.php" class="nav-link">Accueil</a>                        
           </li>
+        </ul>
+        <ul>
+          <?php if ($_SESSION['role'] == 'user'): ?>
+            <li>
+            <a href="Choix_abo.php" class="nav-link">Abonnements</a>
+            </li>
+          <?php else: ?>
+            <li>
+              <a href="Choice.php" class="nav-link">Messages</a>
+            </li>
+          <?php endif; ?>
         </ul>
         <ul>
           <li>
@@ -747,7 +758,7 @@ h1 {
                   <form method="POST" action="modifier_profil.php">
                       <input type="hidden" name="pseudo" value="<?php echo htmlspecialchars($profile['Pseudo']); ?>">
                       <input type="hidden" name="field" value="Prenom">
-                      <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Prenom']); ?>">
+                      <input type="text" name="value" value="<?php echo htmlspecialchars($profile['Prénom']); ?>">
                       <button type="submit">Modifier</button>
                   </form>
               <?php else : ?>
