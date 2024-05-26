@@ -115,7 +115,7 @@ if ($file = fopen($filename, "r")) {
 <body>
     <nav class="nav">
         <div class="nav-left">
-            <a href="#" class="nav-brand">
+            <a href="Accueil_Utilisateur.php" class="nav-brand">
                 <img src="./assets/logo-1.png">
             </a>
             <ul class="nav-menu">
